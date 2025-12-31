@@ -1,5 +1,5 @@
-=== FTP Manager & Uploader ===
-Contributors: mahdi mortezavi, aref solaimany
+# FTP Manager & Uploader 
+Contributors: Aref solaimani & Mahdi mortazavi
 Tags: ftp, uploader, file manager, ftp manager, file browser, url uploader
 Requires at least: 5.0
 Tested up to: 6.9
@@ -8,7 +8,7 @@ License: GPLv2 or later
 
 Complete FTP management solution with background uploads from URL and device, plus full file manager capabilities.
 
-== Description ==
+### Description
 
 FTP Manager & Uploader is a comprehensive WordPress plugin that provides a complete FTP management solution. Upload files from URLs or directly from your device, and manage your entire FTP server structure through an intuitive file manager interface—all from your WordPress admin panel.
 
@@ -41,16 +41,16 @@ FTP Manager & Uploader is a comprehensive WordPress plugin that provides a compl
 
 *   **Upload History:** Track all upload attempts with detailed status information, retry counts, and error messages.
 
-== Installation ==
+### Installation
 
-1.  Upload the `ftp-uploader` folder to the `/wp-content/plugins/` directory.
+1.  Download zip & Upload the zip to the `/wp-content/plugins/` directory.
 2.  Activate the plugin through the 'Plugins' menu in WordPress.
 3.  Navigate to **FTP Uploader > Settings** tab.
 4.  Enter your FTP Host, Username, Password, Base URL (optional), and Remote Path (optional).
 5.  Click **Save Settings**. The plugin will automatically test your FTP connection.
 6.  Once configured, you can start uploading files or managing your FTP server.
 
-== Usage ==
+### Usage
 
 **Uploading from URL:**
 
@@ -82,7 +82,7 @@ FTP Manager & Uploader is a comprehensive WordPress plugin that provides a compl
     *   **Copy:** Copy items to a different location
     *   **Delete:** Remove files or folders (folders are deleted recursively)
 
-== Frequently Asked Questions ==
+### Frequently Asked Questions
 
 = Does it support SFTP? =
 Currently, the plugin supports standard FTP. SFTP support is planned for future updates.
@@ -105,7 +105,7 @@ Yes. Your FTP password is encrypted using AES-256-CBC encryption before being st
 = Can I upload to subdirectories? =
 Yes! Both upload methods support selecting a destination folder. The plugin will automatically create the directory structure if it doesn't exist.
 
-== Changelog ==
+### Changelog
 
 = 1.7.0 =
 *   Added complete File Manager with browse, create, delete, move, and copy functionality
@@ -123,3 +123,4 @@ Yes! Both upload methods support selecting a destination folder. The plugin will
 
 = 1.0.0 =
 *   Initial release with URL upload functionality
+
