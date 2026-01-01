@@ -194,7 +194,7 @@ function ftp_uploader_options_page()
     $is_configured = !empty($options['ftp_host']); // Simple check
     $is_logged_in = $is_configured && ftp_uploader_check_connection();
     $show_edit_form = isset($_GET['edit']) && $_GET['edit'] == '1';
-    
+
     // If settings were just saved successfully and user is logged in, redirect to remove edit parameter
     if (isset($_GET['settings-updated']) && $_GET['settings-updated'] == 'true' && $is_logged_in && $show_edit_form) {
         wp_safe_redirect(admin_url('admin.php?page=ftp-uploader&tab=settings&settings-updated=true'));
@@ -210,7 +210,8 @@ function ftp_uploader_options_page()
             <a href="?page=ftp-uploader&tab=upload-url"
                 class="nav-tab <?php echo $active_tab == 'upload-url' ? 'nav-tab-active' : ''; ?>">Upload from URL</a>
             <a href="?page=ftp-uploader&tab=upload-device"
-                class="nav-tab <?php echo $active_tab == 'upload-device' ? 'nav-tab-active' : ''; ?>">Upload from your device</a>
+                class="nav-tab <?php echo $active_tab == 'upload-device' ? 'nav-tab-active' : ''; ?>">Upload from your
+                device</a>
             <a href="?page=ftp-uploader&tab=file-manager"
                 class="nav-tab <?php echo $active_tab == 'file-manager' ? 'nav-tab-active' : ''; ?>">File Manager</a>
             <a href="?page=ftp-uploader&tab=settings"
@@ -218,24 +219,29 @@ function ftp_uploader_options_page()
         </h2>
         <?php if ($active_tab == 'settings') {
             settings_errors('ftp_uploader_settings');
-            
+
             // Show logged in badge and edit button if logged in and not editing
             if ($is_logged_in && !$show_edit_form) {
                 ?>
-                <div style="background: #fff; border: 1px solid #ccd0d4; box-shadow: 0 1px 1px rgba(0, 0, 0, .04); padding: 20px; margin-top: 20px; max-width: 800px;">
+                <div
+                    style="background: #fff; border: 1px solid #ccd0d4; box-shadow: 0 1px 1px rgba(0, 0, 0, .04); padding: 20px; margin-top: 20px; max-width: 800px;">
                     <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 15px;">
                         <div style="display: flex; align-items: center; gap: 10px;">
-                            <span style="display: inline-block; padding: 6px 12px; background: #00a32a; color: #fff; border-radius: 4px; font-weight: 600; font-size: 14px;">
-                                <span class="dashicons dashicons-yes-alt" style="font-size: 16px; width: 16px; height: 16px; vertical-align: middle; margin-right: 5px;"></span>
+                            <span
+                                style="display: inline-block; padding: 6px 12px; background: #00a32a; color: #fff; border-radius: 4px; font-weight: 600; font-size: 14px;">
+                                <span class="dashicons dashicons-yes-alt"
+                                    style="font-size: 16px; width: 16px; height: 16px; vertical-align: middle; margin-right: 5px;"></span>
                                 Logged In
                             </span>
                         </div>
                         <a href="?page=ftp-uploader&tab=settings&edit=1" class="button button-primary">
-                            <span class="dashicons dashicons-edit" style="font-size: 16px; width: 16px; height: 16px; vertical-align: middle; margin-right: 5px;"></span>
+                            <span class="dashicons dashicons-edit"
+                                style="font-size: 16px; width: 16px; height: 16px; vertical-align: middle; margin-right: 5px;"></span>
                             Edit
                         </a>
                     </div>
-                    <p style="color: #646970; margin: 0;">Your FTP credentials are configured and verified. Click "Edit" to modify your settings.</p>
+                    <p style="color: #646970; margin: 0;">Your FTP credentials are configured and verified. Click "Edit" to modify
+                        your settings.</p>
                 </div>
                 <?php
             } else {
@@ -244,7 +250,8 @@ function ftp_uploader_options_page()
                     ?>
                     <div style="margin-bottom: 15px;">
                         <a href="?page=ftp-uploader&tab=settings" class="button">
-                            <span class="dashicons dashicons-arrow-left-alt" style="font-size: 16px; width: 16px; height: 16px; vertical-align: middle; margin-right: 5px;"></span>
+                            <span class="dashicons dashicons-arrow-left-alt"
+                                style="font-size: 16px; width: 16px; height: 16px; vertical-align: middle; margin-right: 5px;"></span>
                             Cancel Edit
                         </a>
                     </div>
@@ -271,8 +278,10 @@ function ftp_uploader_options_page()
                 }
             }
         } ?>
-        <div style="margin-top: 40px; padding-top: 20px; border-top: 1px solid #ccd0d4; text-align: center; color: #646970; font-size: 13px;">
-            made with 🧠🩸❤️ by <a href="https://t.me/ageek" target="_blank" style="text-decoration: none; color: #2271b1;">Aref</a> & mahdi
+        <div
+            style="margin-top: 40px; padding-top: 20px; border-top: 1px solid #ccd0d4; text-align: center; color: #646970; font-size: 13px;">
+            made with 🧠🩸❤️ by <a href="https://t.me/ageek" target="_blank"
+                style="text-decoration: none; color: #2271b1;">Aref</a> & mahdi
         </div>
     </div>
     <?php
@@ -298,7 +307,7 @@ function ftp_uploader_handle_upload_submission()
     }
 
     $file_url = esc_url_raw($_POST['file_url']);
-    
+
     // Validate URL
     if (!filter_var($file_url, FILTER_VALIDATE_URL)) {
         add_settings_error('ftp_uploader_upload', 'invalid_url', 'Invalid URL provided.', 'error');
@@ -317,7 +326,7 @@ function ftp_uploader_handle_upload_submission()
 
     // Get selected folder path
     $upload_folder = isset($_POST['upload_folder']) ? sanitize_text_field($_POST['upload_folder']) : '';
-    
+
     // If folder is selected, prepend it to the filename
     if (!empty($upload_folder)) {
         $upload_folder = trim($upload_folder, '/');
@@ -330,10 +339,10 @@ function ftp_uploader_handle_upload_submission()
     if ($log_id) {
         // Schedule immediate processing (WordPress cron)
         wp_schedule_single_event(time(), 'ftp_uploader_process_file_node', array($log_id));
-        
+
         // Trigger cron safely via HTTP request (non-blocking)
         ftp_uploader_trigger_cron_safe();
-        
+
         // Redirect to show success message
         wp_safe_redirect(add_query_arg(array('uploaded' => '1'), admin_url('admin.php?page=ftp-uploader&tab=upload-url')));
         exit;
@@ -383,17 +392,17 @@ function ftp_uploader_handle_device_upload_submission()
     $uploaded_file = $_FILES['file_upload'];
     $tmp_file = $uploaded_file['tmp_name'];
     $original_filename = sanitize_file_name($uploaded_file['name']);
-    
+
     // Use custom filename if provided, otherwise use original
     $remote_filename = !empty($_POST['remote_filename']) ? sanitize_file_name($_POST['remote_filename']) : $original_filename;
-    
+
     if (empty($remote_filename)) {
         $remote_filename = 'file_' . time() . '.zip';
     }
 
     // Get selected folder path
     $upload_folder = isset($_POST['upload_folder']) ? sanitize_text_field($_POST['upload_folder']) : '';
-    
+
     // If folder is selected, prepend it to the filename
     if (!empty($upload_folder)) {
         $upload_folder = trim($upload_folder, '/');
@@ -404,25 +413,25 @@ function ftp_uploader_handle_device_upload_submission()
     if (!function_exists('wp_upload_dir')) {
         require_once(ABSPATH . 'wp-admin/includes/file.php');
     }
-    
+
     $upload_dir = wp_upload_dir();
     $ftp_upload_dir = $upload_dir['basedir'] . '/ftp-uploader-queue';
-    
+
     // Create directory if it doesn't exist
     if (!file_exists($ftp_upload_dir)) {
         wp_mkdir_p($ftp_upload_dir);
     }
-    
+
     // Generate unique filename for queue
     $queue_filename = 'device_' . time() . '_' . wp_generate_password(8, false) . '_' . $original_filename;
     $queue_file_path = $ftp_upload_dir . '/' . $queue_filename;
-    
+
     // Copy file to queue directory
     if (!copy($tmp_file, $queue_file_path)) {
         wp_safe_redirect(add_query_arg(array('error' => urlencode('Failed to save uploaded file.')), admin_url('admin.php?page=ftp-uploader&tab=upload-device')));
         exit;
     }
-    
+
     // Remove temporary uploaded file
     wp_delete_file($tmp_file);
 
@@ -432,10 +441,10 @@ function ftp_uploader_handle_device_upload_submission()
     if ($log_id) {
         // Schedule immediate processing (WordPress cron)
         wp_schedule_single_event(time(), 'ftp_uploader_process_device_file_node', array($log_id));
-        
+
         // Trigger cron safely via HTTP request (non-blocking)
         ftp_uploader_trigger_cron_safe();
-        
+
         // Redirect to show success message
         wp_safe_redirect(add_query_arg(array('uploaded' => '1'), admin_url('admin.php?page=ftp-uploader&tab=upload-device')));
         exit;
@@ -453,7 +462,7 @@ function ftp_uploader_ajax_get_logs()
 {
     if (!current_user_can('manage_options'))
         wp_die();
-    
+
     // Verify nonce
     check_ajax_referer('ftp_uploader_upload', 'nonce');
 
@@ -515,17 +524,17 @@ function ftp_uploader_trigger_cron_safe()
     if (defined('DISABLE_WP_CRON') && DISABLE_WP_CRON) {
         return;
     }
-    
+
     // Get the cron URL
     $cron_url = site_url('wp-cron.php');
-    
+
     // Trigger cron via non-blocking HTTP request
     $args = array(
         'timeout' => 0.01,
         'blocking' => false,
         'sslverify' => apply_filters('https_local_ssl_verify', false),
     );
-    
+
     wp_remote_post($cron_url, $args);
 }
 
@@ -536,7 +545,7 @@ function ftp_uploader_ajax_trigger_cron()
 {
     if (!current_user_can('manage_options'))
         wp_die();
-    
+
     // Verify nonce
     check_ajax_referer('ftp_uploader_upload', 'nonce');
 
@@ -544,7 +553,7 @@ function ftp_uploader_ajax_trigger_cron()
     global $wpdb;
     $table_name = $wpdb->prefix . FTP_UPLOADER_TABLE;
     $pending_files = $wpdb->get_results("SELECT id, source_url FROM " . esc_sql($table_name) . " WHERE status IN ('pending', 'retrying') ORDER BY created_at ASC LIMIT 5");
-    
+
     foreach ($pending_files as $file) {
         // Check if device upload or URL upload
         $is_device_upload = (strpos($file->source_url, 'device://') === 0);
@@ -552,10 +561,10 @@ function ftp_uploader_ajax_trigger_cron()
         // Schedule immediate processing
         wp_schedule_single_event(time(), $action, array($file->id));
     }
-    
+
     // Trigger cron safely
     ftp_uploader_trigger_cron_safe();
-    
+
     // Also process one file directly if possible (for immediate feedback)
     if (!empty($pending_files)) {
         $first_file = reset($pending_files);
@@ -565,7 +574,7 @@ function ftp_uploader_ajax_trigger_cron()
         // Process directly in background
         do_action($action, $first_file->id);
     }
-    
+
     wp_send_json_success(array('message' => 'Queue processing triggered'));
 }
 add_action('wp_ajax_ftp_uploader_trigger_cron', 'ftp_uploader_ajax_trigger_cron');
@@ -623,8 +632,15 @@ function ftp_uploader_render_upload_page_cb()
         }
 
         @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.7; }
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.7;
+            }
         }
 
         .error-message {
@@ -745,23 +761,31 @@ function ftp_uploader_render_upload_page_cb()
             <p class="description">Enter the direct URL to the file you want to upload to your FTP server.</p>
             </p>
             <p style="margin-top: 15px;">
-                <label for="remote_filename" style="font-weight: 600; display: block; margin-bottom: 5px;">Remote Filename (optional):</label>
-                <input type="text" name="remote_filename" id="remote_filename" class="regular-text" placeholder="Leave empty to use original filename">
-            <p class="description">Customize the filename on the FTP server. If left empty, the original filename will be used.</p>
+                <label for="remote_filename" style="font-weight: 600; display: block; margin-bottom: 5px;">Remote Filename
+                    (optional):</label>
+                <input type="text" name="remote_filename" id="remote_filename" class="regular-text"
+                    placeholder="Leave empty to use original filename">
+            <p class="description">Customize the filename on the FTP server. If left empty, the original filename will be
+                used.</p>
             </p>
             <p style="margin-top: 15px;">
-                <label for="upload_folder" style="font-weight: 600; display: block; margin-bottom: 5px;">Select Folder (optional):</label>
+                <label for="upload_folder" style="font-weight: 600; display: block; margin-bottom: 5px;">Select Folder
+                    (optional):</label>
                 <select name="upload_folder" id="upload_folder" class="regular-text" style="padding: 8px;">
                     <option value="">Loading folders...</option>
                 </select>
-            <p class="description">Select a folder to upload the file to. If not selected, the file will be uploaded to the root directory.</p>
+            <p class="description">Select a folder to upload the file to. If not selected, the file will be uploaded to the
+                root directory.</p>
             </p>
             <p style="margin-top: 15px;">
                 <input type="submit" class="button button-primary button-hero" value="Start Background Upload">
             </p>
         </form>
-        <p class="description" style="margin-top: 15px; padding: 10px; background: #fff3cd; border-left: 4px solid #ffb900; color: #856404;">
-            <strong>Note:</strong> Files are uploaded in the background using WordPress cron. Processing starts automatically when your site receives traffic, or you can use the "Process Queue Now" button for immediate processing.
+        <p class="description"
+            style="margin-top: 15px; padding: 10px; background: #fff3cd; border-left: 4px solid #ffb900; color: #856404;">
+            <strong>Note:</strong> Files are uploaded in the background using WordPress cron. Processing starts
+            automatically when your site receives traffic, or you can use the "Process Queue Now" button for immediate
+            processing.
         </p>
     </div>
 
@@ -779,9 +803,9 @@ function ftp_uploader_render_upload_page_cb()
                     success: function (response) {
                         var $select = $('#upload_folder');
                         $select.empty();
-                        
+
                         if (response.success && response.data.folders) {
-                            $.each(response.data.folders, function(index, folder) {
+                            $.each(response.data.folders, function (index, folder) {
                                 $select.append($('<option>', {
                                     value: folder.path,
                                     text: folder.display
@@ -794,7 +818,7 @@ function ftp_uploader_render_upload_page_cb()
                             }));
                         }
                     },
-                    error: function(xhr, status, error) {
+                    error: function (xhr, status, error) {
                         var $select = $('#upload_folder');
                         $select.empty();
                         $select.append($('<option>', {
@@ -863,12 +887,14 @@ function ftp_uploader_render_upload_page_cb()
                 <span class="dashicons dashicons-arrow-up-alt2"></span> Hide
             </button>
         </h3>
-        <div id="log-content" style="background: #1e1e1e; color: #d4d4d4; padding: 15px; border-radius: 4px; font-family: 'Courier New', monospace; font-size: 12px; max-height: 300px; overflow-y: auto; margin-top: 10px;">
+        <div id="log-content"
+            style="background: #1e1e1e; color: #d4d4d4; padding: 15px; border-radius: 4px; font-family: 'Courier New', monospace; font-size: 12px; max-height: 300px; overflow-y: auto; margin-top: 10px;">
             <div id="log-entries"></div>
         </div>
         <p style="margin-top: 10px;">
             <button type="button" class="button" id="clear-log">Clear Log</button>
-            <span style="color: #666; font-size: 12px; margin-left: 10px;">This log helps debug upload issues during development.</span>
+            <span style="color: #666; font-size: 12px; margin-left: 10px;">This log helps debug upload issues during
+                development.</span>
         </p>
     </div>
 
@@ -892,23 +918,23 @@ function ftp_uploader_render_upload_page_cb()
                         var oldContent = $oldBody.html();
                         $oldBody.html(response);
                         $('#ftp-loading-indicator').fadeOut();
-                        
+
                         // Check for status changes and log them
-                        $(response).find('tr').each(function() {
+                        $(response).find('tr').each(function () {
                             var $row = $(this);
                             var id = $row.find('td:first').text().trim();
                             var status = $row.find('.status-pill').text().trim();
                             var filename = $row.find('.file-link').text().trim() || $row.find('td:nth-child(2)').text().trim();
-                            
+
                             if (!id || id === 'No uploads yet.') return;
-                            
+
                             var currentState = status;
                             var previousState = previousStates[id];
-                            
+
                             // Only log if state changed
                             if (previousState !== currentState) {
                                 previousStates[id] = currentState;
-                                
+
                                 if (status.indexOf('Failed') !== -1) {
                                     var errorMsg = $row.find('.error-message').text().trim();
                                     addLogEntry('Upload failed: ' + filename + (errorMsg ? ' - ' + errorMsg : ''), 'error');
@@ -964,7 +990,7 @@ function ftp_uploader_render_upload_page_cb()
                     document.body.appendChild(textArea);
                     textArea.focus();
                     textArea.select();
-                    
+
                     try {
                         var successful = document.execCommand('copy');
                         document.body.removeChild(textArea);
@@ -984,7 +1010,7 @@ function ftp_uploader_render_upload_page_cb()
                 e.preventDefault();
                 var $btn = $(this);
                 var link = $btn.data('link');
-                
+
                 if (!link) {
                     console.error('No link data found');
                     return;
@@ -992,15 +1018,15 @@ function ftp_uploader_render_upload_page_cb()
 
                 // Disable button temporarily to prevent double-clicks
                 $btn.prop('disabled', true);
-                
+
                 copyToClipboard(link).then(function () {
                     // Show success toast
                     var x = document.getElementById("ftp-toast");
                     x.className = "show";
-                    setTimeout(function () { 
-                        x.className = x.className.replace("show", ""); 
+                    setTimeout(function () {
+                        x.className = x.className.replace("show", "");
                     }, 3000);
-                    
+
                     // Re-enable button
                     $btn.prop('disabled', false);
                 }).catch(function (err) {
@@ -1016,7 +1042,7 @@ function ftp_uploader_render_upload_page_cb()
                 var timestamp = new Date().toLocaleTimeString();
                 var icon = 'info';
                 var color = '#d4d4d4';
-                
+
                 if (type === 'error') {
                     icon = 'warning';
                     color = '#f48771';
@@ -1027,13 +1053,13 @@ function ftp_uploader_render_upload_page_cb()
                     icon = 'warning';
                     color = '#dcdcaa';
                 }
-                
+
                 var entry = '<div style="margin-bottom: 5px; color: ' + color + ';">' +
                     '<span style="color: #858585;">[' + timestamp + ']</span> ' +
                     '<span class="dashicons dashicons-' + icon + '" style="font-size: 14px; width: 14px; height: 14px; vertical-align: middle;"></span> ' +
                     escapeHtml(message) +
                     '</div>';
-                
+
                 $('#log-entries').append(entry);
                 var logContent = document.getElementById('log-content');
                 logContent.scrollTop = logContent.scrollHeight;
@@ -1047,11 +1073,11 @@ function ftp_uploader_render_upload_page_cb()
                     '"': '&quot;',
                     "'": '&#039;'
                 };
-                return text.replace(/[&<>"']/g, function(m) { return map[m]; });
+                return text.replace(/[&<>"']/g, function (m) { return map[m]; });
             }
 
             // Toggle log visibility
-            $('#toggle-log').on('click', function() {
+            $('#toggle-log').on('click', function () {
                 var $content = $('#log-content');
                 var $btn = $(this);
                 if ($content.is(':visible')) {
@@ -1064,17 +1090,17 @@ function ftp_uploader_render_upload_page_cb()
             });
 
             // Clear log
-            $('#clear-log').on('click', function() {
+            $('#clear-log').on('click', function () {
                 $('#log-entries').empty();
                 addLogEntry('Log cleared', 'info');
             });
 
             // Trigger cron manually
-            $('#trigger-cron').on('click', function() {
+            $('#trigger-cron').on('click', function () {
                 var $btn = $(this);
                 $btn.prop('disabled', true).html('<span class="dashicons dashicons-update" style="animation: spin 1s linear infinite;"></span> Processing...');
                 addLogEntry('Manually triggering queue processing...', 'info');
-                
+
                 $.ajax({
                     url: ajaxurl,
                     type: 'POST',
@@ -1082,13 +1108,13 @@ function ftp_uploader_render_upload_page_cb()
                         action: 'ftp_uploader_trigger_cron',
                         nonce: '<?php echo esc_js(wp_create_nonce('ftp_uploader_upload')); ?>'
                     },
-                    success: function(response) {
+                    success: function (response) {
                         addLogEntry('Queue processing triggered', 'success');
-                        setTimeout(function() {
+                        setTimeout(function () {
                             $btn.prop('disabled', false).html('<span class="dashicons dashicons-controls-play"></span> Process Queue Now');
                         }, 2000);
                     },
-                    error: function() {
+                    error: function () {
                         addLogEntry('Failed to trigger queue processing', 'error');
                         $btn.prop('disabled', false).html('<span class="dashicons dashicons-controls-play"></span> Process Queue Now');
                     }
@@ -1101,8 +1127,10 @@ function ftp_uploader_render_upload_page_cb()
             addLogEntry('Note: WordPress cron processes uploads when the site receives traffic. Use "Process Queue Now" for immediate processing.', 'info');
         });
     </script>
-    <div style="margin-top: 40px; padding-top: 20px; border-top: 1px solid #ccd0d4; text-align: center; color: #646970; font-size: 13px;">
-        made with 🧠🩸❤️ by <a href="https://t.me/ageek" target="_blank" style="text-decoration: none; color: #2271b1;">Aref</a> & mahdi
+    <div
+        style="margin-top: 40px; padding-top: 20px; border-top: 1px solid #ccd0d4; text-align: center; color: #646970; font-size: 13px;">
+        made with 🧠🩸❤️ by <a href="https://t.me/ageek" target="_blank"
+            style="text-decoration: none; color: #2271b1;">Aref</a> & mahdi
     </div>
     <?php
 }
@@ -1160,8 +1188,15 @@ function ftp_uploader_render_device_upload_page_cb()
         }
 
         @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.7; }
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.7;
+            }
         }
 
         .error-message {
@@ -1280,23 +1315,31 @@ function ftp_uploader_render_device_upload_page_cb()
             <p class="description">Select a file from your device to upload to your FTP server.</p>
             </p>
             <p style="margin-top: 15px;">
-                <label for="remote_filename" style="font-weight: 600; display: block; margin-bottom: 5px;">Remote Filename (optional):</label>
-                <input type="text" name="remote_filename" id="remote_filename_device" class="regular-text" placeholder="Leave empty to use original filename">
-            <p class="description">Customize the filename on the FTP server. If left empty, the original filename will be used.</p>
+                <label for="remote_filename" style="font-weight: 600; display: block; margin-bottom: 5px;">Remote Filename
+                    (optional):</label>
+                <input type="text" name="remote_filename" id="remote_filename_device" class="regular-text"
+                    placeholder="Leave empty to use original filename">
+            <p class="description">Customize the filename on the FTP server. If left empty, the original filename will be
+                used.</p>
             </p>
             <p style="margin-top: 15px;">
-                <label for="upload_folder_device" style="font-weight: 600; display: block; margin-bottom: 5px;">Select Folder (optional):</label>
+                <label for="upload_folder_device" style="font-weight: 600; display: block; margin-bottom: 5px;">Select
+                    Folder (optional):</label>
                 <select name="upload_folder" id="upload_folder_device" class="regular-text" style="padding: 8px;">
                     <option value="">Loading folders...</option>
                 </select>
-            <p class="description">Select a folder to upload the file to. If not selected, the file will be uploaded to the root directory.</p>
+            <p class="description">Select a folder to upload the file to. If not selected, the file will be uploaded to the
+                root directory.</p>
             </p>
             <p style="margin-top: 15px;">
                 <input type="submit" class="button button-primary button-hero" value="Start Background Upload">
             </p>
         </form>
-        <p class="description" style="margin-top: 15px; padding: 10px; background: #fff3cd; border-left: 4px solid #ffb900; color: #856404;">
-            <strong>Note:</strong> Files are uploaded in the background using WordPress cron. Processing starts automatically when your site receives traffic, or you can use the "Process Queue Now" button for immediate processing.
+        <p class="description"
+            style="margin-top: 15px; padding: 10px; background: #fff3cd; border-left: 4px solid #ffb900; color: #856404;">
+            <strong>Note:</strong> Files are uploaded in the background using WordPress cron. Processing starts
+            automatically when your site receives traffic, or you can use the "Process Queue Now" button for immediate
+            processing.
         </p>
     </div>
 
@@ -1314,9 +1357,9 @@ function ftp_uploader_render_device_upload_page_cb()
                     success: function (response) {
                         var $select = $('#upload_folder_device');
                         $select.empty();
-                        
+
                         if (response.success && response.data.folders) {
-                            $.each(response.data.folders, function(index, folder) {
+                            $.each(response.data.folders, function (index, folder) {
                                 $select.append($('<option>', {
                                     value: folder.path,
                                     text: folder.display
@@ -1329,7 +1372,7 @@ function ftp_uploader_render_device_upload_page_cb()
                             }));
                         }
                     },
-                    error: function(xhr, status, error) {
+                    error: function (xhr, status, error) {
                         var $select = $('#upload_folder_device');
                         $select.empty();
                         $select.append($('<option>', {
@@ -1398,12 +1441,14 @@ function ftp_uploader_render_device_upload_page_cb()
                 <span class="dashicons dashicons-arrow-up-alt2"></span> Hide
             </button>
         </h3>
-        <div id="log-content" style="background: #1e1e1e; color: #d4d4d4; padding: 15px; border-radius: 4px; font-family: 'Courier New', monospace; font-size: 12px; max-height: 300px; overflow-y: auto; margin-top: 10px;">
+        <div id="log-content"
+            style="background: #1e1e1e; color: #d4d4d4; padding: 15px; border-radius: 4px; font-family: 'Courier New', monospace; font-size: 12px; max-height: 300px; overflow-y: auto; margin-top: 10px;">
             <div id="log-entries"></div>
         </div>
         <p style="margin-top: 10px;">
             <button type="button" class="button" id="clear-log">Clear Log</button>
-            <span style="color: #666; font-size: 12px; margin-left: 10px;">This log helps debug upload issues during development.</span>
+            <span style="color: #666; font-size: 12px; margin-left: 10px;">This log helps debug upload issues during
+                development.</span>
         </p>
     </div>
 
@@ -1427,23 +1472,23 @@ function ftp_uploader_render_device_upload_page_cb()
                         var oldContent = $oldBody.html();
                         $oldBody.html(response);
                         $('#ftp-loading-indicator').fadeOut();
-                        
+
                         // Check for status changes and log them
-                        $(response).find('tr').each(function() {
+                        $(response).find('tr').each(function () {
                             var $row = $(this);
                             var id = $row.find('td:first').text().trim();
                             var status = $row.find('.status-pill').text().trim();
                             var filename = $row.find('.file-link').text().trim() || $row.find('td:nth-child(2)').text().trim();
-                            
+
                             if (!id || id === 'No uploads yet.') return;
-                            
+
                             var currentState = status;
                             var previousState = previousStates[id];
-                            
+
                             // Only log if state changed
                             if (previousState !== currentState) {
                                 previousStates[id] = currentState;
-                                
+
                                 if (status.indexOf('Failed') !== -1) {
                                     var errorMsg = $row.find('.error-message').text().trim();
                                     addLogEntry('Upload failed: ' + filename + (errorMsg ? ' - ' + errorMsg : ''), 'error');
@@ -1499,7 +1544,7 @@ function ftp_uploader_render_device_upload_page_cb()
                     document.body.appendChild(textArea);
                     textArea.focus();
                     textArea.select();
-                    
+
                     try {
                         var successful = document.execCommand('copy');
                         document.body.removeChild(textArea);
@@ -1519,7 +1564,7 @@ function ftp_uploader_render_device_upload_page_cb()
                 e.preventDefault();
                 var $btn = $(this);
                 var link = $btn.data('link');
-                
+
                 if (!link) {
                     console.error('No link data found');
                     return;
@@ -1527,15 +1572,15 @@ function ftp_uploader_render_device_upload_page_cb()
 
                 // Disable button temporarily to prevent double-clicks
                 $btn.prop('disabled', true);
-                
+
                 copyToClipboard(link).then(function () {
                     // Show success toast
                     var x = document.getElementById("ftp-toast");
                     x.className = "show";
-                    setTimeout(function () { 
-                        x.className = x.className.replace("show", ""); 
+                    setTimeout(function () {
+                        x.className = x.className.replace("show", "");
                     }, 3000);
-                    
+
                     // Re-enable button
                     $btn.prop('disabled', false);
                 }).catch(function (err) {
@@ -1551,7 +1596,7 @@ function ftp_uploader_render_device_upload_page_cb()
                 var timestamp = new Date().toLocaleTimeString();
                 var icon = 'info';
                 var color = '#d4d4d4';
-                
+
                 if (type === 'error') {
                     icon = 'warning';
                     color = '#f48771';
@@ -1562,13 +1607,13 @@ function ftp_uploader_render_device_upload_page_cb()
                     icon = 'warning';
                     color = '#dcdcaa';
                 }
-                
+
                 var entry = '<div style="margin-bottom: 5px; color: ' + color + ';">' +
                     '<span style="color: #858585;">[' + timestamp + ']</span> ' +
                     '<span class="dashicons dashicons-' + icon + '" style="font-size: 14px; width: 14px; height: 14px; vertical-align: middle;"></span> ' +
                     escapeHtml(message) +
                     '</div>';
-                
+
                 $('#log-entries').append(entry);
                 var logContent = document.getElementById('log-content');
                 logContent.scrollTop = logContent.scrollHeight;
@@ -1582,11 +1627,11 @@ function ftp_uploader_render_device_upload_page_cb()
                     '"': '&quot;',
                     "'": '&#039;'
                 };
-                return text.replace(/[&<>"']/g, function(m) { return map[m]; });
+                return text.replace(/[&<>"']/g, function (m) { return map[m]; });
             }
 
             // Toggle log visibility
-            $('#toggle-log').on('click', function() {
+            $('#toggle-log').on('click', function () {
                 var $content = $('#log-content');
                 var $btn = $(this);
                 if ($content.is(':visible')) {
@@ -1599,17 +1644,17 @@ function ftp_uploader_render_device_upload_page_cb()
             });
 
             // Clear log
-            $('#clear-log').on('click', function() {
+            $('#clear-log').on('click', function () {
                 $('#log-entries').empty();
                 addLogEntry('Log cleared', 'info');
             });
 
             // Trigger cron manually
-            $('#trigger-cron').on('click', function() {
+            $('#trigger-cron').on('click', function () {
                 var $btn = $(this);
                 $btn.prop('disabled', true).html('<span class="dashicons dashicons-update" style="animation: spin 1s linear infinite;"></span> Processing...');
                 addLogEntry('Manually triggering queue processing...', 'info');
-                
+
                 $.ajax({
                     url: ajaxurl,
                     type: 'POST',
@@ -1617,13 +1662,13 @@ function ftp_uploader_render_device_upload_page_cb()
                         action: 'ftp_uploader_trigger_cron',
                         nonce: '<?php echo esc_js(wp_create_nonce('ftp_uploader_upload')); ?>'
                     },
-                    success: function(response) {
+                    success: function (response) {
                         addLogEntry('Queue processing triggered', 'success');
-                        setTimeout(function() {
+                        setTimeout(function () {
                             $btn.prop('disabled', false).html('<span class="dashicons dashicons-controls-play"></span> Process Queue Now');
                         }, 2000);
                     },
-                    error: function() {
+                    error: function () {
                         addLogEntry('Failed to trigger queue processing', 'error');
                         $btn.prop('disabled', false).html('<span class="dashicons dashicons-controls-play"></span> Process Queue Now');
                     }
@@ -1636,8 +1681,10 @@ function ftp_uploader_render_device_upload_page_cb()
             addLogEntry('Note: WordPress cron processes uploads when the site receives traffic. Use "Process Queue Now" for immediate processing.', 'info');
         });
     </script>
-    <div style="margin-top: 40px; padding-top: 20px; border-top: 1px solid #ccd0d4; text-align: center; color: #646970; font-size: 13px;">
-        made with 🧠🩸❤️ by <a href="https://t.me/ageek" target="_blank" style="text-decoration: none; color: #2271b1;">Aref</a> & mahdi
+    <div
+        style="margin-top: 40px; padding-top: 20px; border-top: 1px solid #ccd0d4; text-align: center; color: #646970; font-size: 13px;">
+        made with 🧠🩸❤️ by <a href="https://t.me/ageek" target="_blank"
+            style="text-decoration: none; color: #2271b1;">Aref</a> & mahdi
     </div>
     <?php
 }
@@ -1691,7 +1738,7 @@ function ftp_uploader_ajax_list_files()
     $current_path = isset($_POST['path']) ? sanitize_text_field($_POST['path']) : '';
     $options = get_option('ftp_uploader_settings');
     $base_path = isset($options['remote_path']) ? trailingslashit($options['remote_path']) : '/';
-    
+
     // Combine base path with current path
     $full_path = rtrim($base_path . ltrim($current_path, '/'), '/');
     if (empty($full_path)) {
@@ -1719,7 +1766,7 @@ function ftp_uploader_ajax_list_files()
     }
 
     $items = array();
-    
+
     // Process detailed list to get file types
     $file_details = array();
     if (is_array($detailed_files)) {
@@ -1744,10 +1791,10 @@ function ftp_uploader_ajax_list_files()
 
         $full_file_path = rtrim($full_path, '/') . '/' . $basename;
         $relative_path = ltrim(str_replace($base_path, '', $full_file_path), '/');
-        
+
         $is_dir = false;
         $file_size = 0;
-        
+
         if (isset($file_details[$basename])) {
             $is_dir = $file_details[$basename]['type'] === 'directory';
             $file_size = $file_details[$basename]['size'];
@@ -1773,9 +1820,11 @@ function ftp_uploader_ajax_list_files()
     }
 
     // Sort: directories first, then files
-    usort($items, function($a, $b) {
-        if ($a['is_directory'] && !$b['is_directory']) return -1;
-        if (!$a['is_directory'] && $b['is_directory']) return 1;
+    usort($items, function ($a, $b) {
+        if ($a['is_directory'] && !$b['is_directory'])
+            return -1;
+        if (!$a['is_directory'] && $b['is_directory'])
+            return 1;
         return strcasecmp($a['name'], $b['name']);
     });
 
@@ -1802,7 +1851,7 @@ function ftp_uploader_ajax_get_folders()
 
     $options = get_option('ftp_uploader_settings');
     $base_path = isset($options['remote_path']) ? trailingslashit($options['remote_path']) : '/';
-    
+
     // Get folders recursively from base path
     $conn_id = ftp_uploader_get_connection();
     if (!$conn_id) {
@@ -1810,31 +1859,32 @@ function ftp_uploader_ajax_get_folders()
     }
 
     $folders = array();
-    
+
     // Function to recursively get folders (limited depth for performance)
-    function ftp_uploader_get_folders_recursive($conn, $base_path, $current_path, &$folders, $base_path_original, $depth = 0, $max_depth = 2) {
+    function ftp_uploader_get_folders_recursive($conn, $base_path, $current_path, &$folders, $base_path_original, $depth = 0, $max_depth = 2)
+    {
         if ($depth > $max_depth) {
             return; // Limit recursion depth
         }
-        
+
         $full_path = rtrim($base_path . ltrim($current_path, '/'), '/');
         if (empty($full_path)) {
             $full_path = '/';
         }
-        
+
         // Change to the directory
         if (!@ftp_chdir($conn, $full_path)) {
             return;
         }
-        
+
         // Get file list
         $files = @ftp_nlist($conn, '.');
         $detailed_files = @ftp_rawlist($conn, '.');
-        
+
         if ($files === false) {
             return;
         }
-        
+
         // Process detailed list to get file types
         $file_details = array();
         if (is_array($detailed_files)) {
@@ -1848,13 +1898,13 @@ function ftp_uploader_ajax_get_folders()
                 }
             }
         }
-        
+
         foreach ($files as $file) {
             $basename = basename($file);
             if ($basename === '.' || $basename === '..') {
                 continue;
             }
-            
+
             $is_dir = false;
             if (isset($file_details[$basename])) {
                 $is_dir = true;
@@ -1867,7 +1917,7 @@ function ftp_uploader_ajax_get_folders()
                     @ftp_chdir($conn, $old_dir);
                 }
             }
-            
+
             if ($is_dir) {
                 $relative_path = ltrim(str_replace($base_path_original, '', rtrim($full_path, '/') . '/' . $basename), '/');
                 $folders[] = array(
@@ -1875,7 +1925,7 @@ function ftp_uploader_ajax_get_folders()
                     'path' => $relative_path,
                     'display' => $relative_path ? $relative_path : $basename
                 );
-                
+
                 // Recursively get subfolders (limited depth)
                 if ($depth < $max_depth) {
                     ftp_uploader_get_folders_recursive($conn, $base_path, $relative_path, $folders, $base_path_original, $depth + 1, $max_depth);
@@ -1883,24 +1933,24 @@ function ftp_uploader_ajax_get_folders()
             }
         }
     }
-    
+
     // Add root option
     $folders[] = array(
         'name' => 'Root',
         'path' => '',
         'display' => 'Root (Default)'
     );
-    
+
     // Get all folders
     ftp_uploader_get_folders_recursive($conn_id, $base_path, '', $folders, $base_path);
-    
+
     ftp_close($conn_id);
-    
+
     // Sort folders by path
-    usort($folders, function($a, $b) {
+    usort($folders, function ($a, $b) {
         return strcasecmp($a['path'], $b['path']);
     });
-    
+
     wp_send_json_success(array('folders' => $folders));
 }
 add_action('wp_ajax_ftp_uploader_get_folders', 'ftp_uploader_ajax_get_folders');
@@ -1918,19 +1968,19 @@ function ftp_uploader_ajax_create_directory()
 
     $dir_name = isset($_POST['dir_name']) ? sanitize_file_name($_POST['dir_name']) : '';
     $current_path = isset($_POST['path']) ? sanitize_text_field($_POST['path']) : '';
-    
+
     if (empty($dir_name)) {
         wp_send_json_error(array('message' => 'Directory name is required'));
     }
 
     $options = get_option('ftp_uploader_settings');
     $base_path = isset($options['remote_path']) ? trailingslashit($options['remote_path']) : '/';
-    
+
     $full_path = rtrim($base_path . ltrim($current_path, '/'), '/');
     if (empty($full_path)) {
         $full_path = '/';
     }
-    
+
     $new_dir_path = rtrim($full_path, '/') . '/' . $dir_name;
 
     $conn_id = ftp_uploader_get_connection();
@@ -1969,14 +2019,14 @@ function ftp_uploader_ajax_delete_file()
     check_ajax_referer('ftp_file_manager_nonce', 'nonce');
 
     $file_path = isset($_POST['file_path']) ? sanitize_text_field($_POST['file_path']) : '';
-    
+
     if (empty($file_path)) {
         wp_send_json_error(array('message' => 'File path is required'));
     }
 
     $options = get_option('ftp_uploader_settings');
     $base_path = isset($options['remote_path']) ? trailingslashit($options['remote_path']) : '/';
-    
+
     $full_path = rtrim($base_path . ltrim($file_path, '/'), '/');
 
     $conn_id = ftp_uploader_get_connection();
@@ -2007,14 +2057,14 @@ function ftp_uploader_ajax_delete_directory()
     check_ajax_referer('ftp_file_manager_nonce', 'nonce');
 
     $dir_path = isset($_POST['dir_path']) ? sanitize_text_field($_POST['dir_path']) : '';
-    
+
     if (empty($dir_path)) {
         wp_send_json_error(array('message' => 'Directory path is required'));
     }
 
     $options = get_option('ftp_uploader_settings');
     $base_path = isset($options['remote_path']) ? trailingslashit($options['remote_path']) : '/';
-    
+
     $full_path = rtrim($base_path . ltrim($dir_path, '/'), '/');
 
     $conn_id = ftp_uploader_get_connection();
@@ -2023,25 +2073,26 @@ function ftp_uploader_ajax_delete_directory()
     }
 
     // Recursively delete directory
-    function ftp_uploader_delete_directory_recursive($conn, $dir) {
+    function ftp_uploader_delete_directory_recursive($conn, $dir)
+    {
         // Change to the directory
         $old_dir = @ftp_pwd($conn);
         if (!@ftp_chdir($conn, $dir)) {
             return false;
         }
-        
+
         $files = @ftp_nlist($conn, '.');
         if ($files === false) {
             @ftp_chdir($conn, $old_dir);
             return false;
         }
-        
+
         foreach ($files as $file) {
             $basename = basename($file);
             if ($basename === '.' || $basename === '..') {
                 continue;
             }
-            
+
             // Check if it's a directory
             $current_dir = @ftp_pwd($conn);
             if (@ftp_chdir($conn, $basename)) {
@@ -2060,15 +2111,15 @@ function ftp_uploader_ajax_delete_directory()
                 }
             }
         }
-        
+
         // Go back to parent directory
         @ftp_chdir($conn, $old_dir);
-        
+
         // Remove the directory itself
         if (!@ftp_rmdir($conn, $dir)) {
             return false;
         }
-        
+
         return true;
     }
 
@@ -2096,18 +2147,18 @@ function ftp_uploader_ajax_move_item()
 
     $source_path = isset($_POST['source_path']) ? sanitize_text_field(wp_unslash($_POST['source_path'])) : '';
     $destination_path = isset($_POST['destination_path']) ? sanitize_text_field(wp_unslash($_POST['destination_path'])) : '';
-    
+
     if (empty($source_path)) {
         wp_send_json_error(array('message' => 'Source path is required'));
     }
-    
+
     if (empty($destination_path)) {
         wp_send_json_error(array('message' => 'Destination path is required'));
     }
 
     $options = get_option('ftp_uploader_settings');
     $base_path = isset($options['remote_path']) ? trailingslashit($options['remote_path']) : '/';
-    
+
     $full_source = rtrim($base_path . ltrim($source_path, '/'), '/');
     $full_destination = rtrim($base_path . ltrim($destination_path, '/'), '/');
 
@@ -2119,7 +2170,7 @@ function ftp_uploader_ajax_move_item()
     // Check if destination already exists
     $dest_name = basename($full_source);
     $full_dest_path = rtrim($full_destination, '/') . '/' . $dest_name;
-    
+
     // Check if destination exists
     $old_dir = @ftp_pwd($conn_id);
     if (@ftp_chdir($conn_id, $full_dest_path)) {
@@ -2129,11 +2180,12 @@ function ftp_uploader_ajax_move_item()
     }
 
     // Recursively move directory or file
-    function ftp_uploader_move_recursive($conn, $source, $dest_dir) {
+    function ftp_uploader_move_recursive($conn, $source, $dest_dir)
+    {
         $old_dir = @ftp_pwd($conn);
         $item_name = basename($source);
         $full_dest = rtrim($dest_dir, '/') . '/' . $item_name;
-        
+
         // Check if it's a directory
         if (@ftp_chdir($conn, $source)) {
             @ftp_chdir($conn, $old_dir);
@@ -2141,24 +2193,24 @@ function ftp_uploader_ajax_move_item()
             if (!@ftp_mkdir($conn, $full_dest)) {
                 return false;
             }
-            
+
             $files = @ftp_nlist($conn, $source);
             if ($files === false) {
                 return false;
             }
-            
+
             foreach ($files as $file) {
                 $basename = basename($file);
                 if ($basename === '.' || $basename === '..') {
                     continue;
                 }
-                
+
                 $sub_source = rtrim($source, '/') . '/' . $basename;
                 if (!ftp_uploader_move_recursive($conn, $sub_source, $full_dest)) {
                     return false;
                 }
             }
-            
+
             // Remove source directory
             if (!ftp_uploader_delete_directory_recursive($conn, $source)) {
                 return false;
@@ -2169,42 +2221,43 @@ function ftp_uploader_ajax_move_item()
             if (!@ftp_get($conn, $temp_file, $source, FTP_BINARY)) {
                 return false;
             }
-            
+
             if (!@ftp_put($conn, $full_dest, $temp_file, FTP_BINARY)) {
                 wp_delete_file($temp_file);
                 return false;
             }
-            
+
             wp_delete_file($temp_file);
-            
+
             // Delete source file
             if (!@ftp_delete($conn, $source)) {
                 return false;
             }
         }
-        
+
         return true;
     }
-    
+
     // Helper function for recursive delete (reuse from delete_directory)
-    function ftp_uploader_delete_directory_recursive($conn, $dir) {
+    function ftp_uploader_delete_directory_recursive($conn, $dir)
+    {
         $old_dir = @ftp_pwd($conn);
         if (!@ftp_chdir($conn, $dir)) {
             return false;
         }
-        
+
         $files = @ftp_nlist($conn, '.');
         if ($files === false) {
             @ftp_chdir($conn, $old_dir);
             return false;
         }
-        
+
         foreach ($files as $file) {
             $basename = basename($file);
             if ($basename === '.' || $basename === '..') {
                 continue;
             }
-            
+
             $current_dir = @ftp_pwd($conn);
             if (@ftp_chdir($conn, $basename)) {
                 @ftp_chdir($conn, $current_dir);
@@ -2220,13 +2273,13 @@ function ftp_uploader_ajax_move_item()
                 }
             }
         }
-        
+
         @ftp_chdir($conn, $old_dir);
-        
+
         if (!@ftp_rmdir($conn, $dir)) {
             return false;
         }
-        
+
         return true;
     }
 
@@ -2234,7 +2287,8 @@ function ftp_uploader_ajax_move_item()
     $dest_parts = explode('/', trim($full_destination, '/'));
     $current_path = '';
     foreach ($dest_parts as $part) {
-        if (empty($part)) continue;
+        if (empty($part))
+            continue;
         $current_path .= '/' . $part;
         if (!@ftp_chdir($conn_id, $current_path)) {
             if (!@ftp_mkdir($conn_id, $current_path)) {
@@ -2268,18 +2322,18 @@ function ftp_uploader_ajax_copy_item()
 
     $source_path = isset($_POST['source_path']) ? sanitize_text_field(wp_unslash($_POST['source_path'])) : '';
     $destination_path = isset($_POST['destination_path']) ? sanitize_text_field(wp_unslash($_POST['destination_path'])) : '';
-    
+
     if (empty($source_path)) {
         wp_send_json_error(array('message' => 'Source path is required'));
     }
-    
+
     if (empty($destination_path)) {
         wp_send_json_error(array('message' => 'Destination path is required'));
     }
 
     $options = get_option('ftp_uploader_settings');
     $base_path = isset($options['remote_path']) ? trailingslashit($options['remote_path']) : '/';
-    
+
     $full_source = rtrim($base_path . ltrim($source_path, '/'), '/');
     $full_destination = rtrim($base_path . ltrim($destination_path, '/'), '/');
 
@@ -2291,7 +2345,7 @@ function ftp_uploader_ajax_copy_item()
     // Check if destination already exists
     $dest_name = basename($full_source);
     $full_dest_path = rtrim($full_destination, '/') . '/' . $dest_name;
-    
+
     $old_dir = @ftp_pwd($conn_id);
     if (@ftp_chdir($conn_id, $full_dest_path)) {
         @ftp_chdir($conn_id, $old_dir);
@@ -2300,11 +2354,12 @@ function ftp_uploader_ajax_copy_item()
     }
 
     // Recursively copy directory or file
-    function ftp_uploader_copy_recursive($conn, $source, $dest_dir) {
+    function ftp_uploader_copy_recursive($conn, $source, $dest_dir)
+    {
         $old_dir = @ftp_pwd($conn);
         $item_name = basename($source);
         $full_dest = rtrim($dest_dir, '/') . '/' . $item_name;
-        
+
         // Check if it's a directory
         if (@ftp_chdir($conn, $source)) {
             @ftp_chdir($conn, $old_dir);
@@ -2312,18 +2367,18 @@ function ftp_uploader_ajax_copy_item()
             if (!@ftp_mkdir($conn, $full_dest)) {
                 return false;
             }
-            
+
             $files = @ftp_nlist($conn, $source);
             if ($files === false) {
                 return false;
             }
-            
+
             foreach ($files as $file) {
                 $basename = basename($file);
                 if ($basename === '.' || $basename === '..') {
                     continue;
                 }
-                
+
                 $sub_source = rtrim($source, '/') . '/' . $basename;
                 if (!ftp_uploader_copy_recursive($conn, $sub_source, $full_dest)) {
                     return false;
@@ -2335,15 +2390,15 @@ function ftp_uploader_ajax_copy_item()
             if (!@ftp_get($conn, $temp_file, $source, FTP_BINARY)) {
                 return false;
             }
-            
+
             if (!@ftp_put($conn, $full_dest, $temp_file, FTP_BINARY)) {
                 wp_delete_file($temp_file);
                 return false;
             }
-            
+
             wp_delete_file($temp_file);
         }
-        
+
         return true;
     }
 
@@ -2351,7 +2406,8 @@ function ftp_uploader_ajax_copy_item()
     $dest_parts = explode('/', trim($full_destination, '/'));
     $current_path = '';
     foreach ($dest_parts as $part) {
-        if (empty($part)) continue;
+        if (empty($part))
+            continue;
         $current_path .= '/' . $part;
         if (!@ftp_chdir($conn_id, $current_path)) {
             if (!@ftp_mkdir($conn_id, $current_path)) {
@@ -2523,7 +2579,7 @@ function ftp_uploader_render_file_manager_page_cb()
             top: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0,0,0,0.5);
+            background-color: rgba(0, 0, 0, 0.5);
         }
 
         .modal-content {
@@ -2533,7 +2589,7 @@ function ftp_uploader_render_file_manager_page_cb()
             border: 1px solid #ccd0d4;
             width: 90%;
             max-width: 500px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
         }
 
         .modal-header {
@@ -2561,13 +2617,14 @@ function ftp_uploader_render_file_manager_page_cb()
 
     <div class="ftp-file-manager">
         <h2><span class="dashicons dashicons-media-code"></span> FTP File Manager</h2>
-        
+
         <div id="ftp-file-manager-message" style="display: none; margin-bottom: 15px;"></div>
 
         <div class="file-manager-container">
             <div class="loading-overlay" id="file-manager-loading">
                 <div style="text-align: center;">
-                    <span class="dashicons dashicons-update" style="font-size: 32px; animation: spin 2s linear infinite;"></span>
+                    <span class="dashicons dashicons-update"
+                        style="font-size: 32px; animation: spin 2s linear infinite;"></span>
                     <p>Loading...</p>
                 </div>
             </div>
@@ -2613,7 +2670,8 @@ function ftp_uploader_render_file_manager_page_cb()
             </div>
             <form id="create-folder-form">
                 <p>
-                    <label for="folder-name" style="font-weight: 600; display: block; margin-bottom: 5px;">Folder Name:</label>
+                    <label for="folder-name" style="font-weight: 600; display: block; margin-bottom: 5px;">Folder
+                        Name:</label>
                     <input type="text" id="folder-name" class="regular-text" required style="width: 100%;">
                 </p>
                 <p style="margin-top: 15px;">
@@ -2658,8 +2716,8 @@ function ftp_uploader_render_file_manager_page_cb()
                     .addClass('notice notice-' + (type === 'success' ? 'success' : 'error'))
                     .html('<p>' + message + '</p>')
                     .fadeIn();
-                
-                setTimeout(function() {
+
+                setTimeout(function () {
                     $msg.fadeOut();
                 }, 3000);
             }
@@ -2687,7 +2745,7 @@ function ftp_uploader_render_file_manager_page_cb()
                         nonce: '<?php echo esc_js(wp_create_nonce('ftp_file_manager_nonce')); ?>',
                         path: currentPath
                     },
-                    success: function(response) {
+                    success: function (response) {
                         hideLoading();
                         if (response.success) {
                             basePath = response.data.base_path;
@@ -2698,7 +2756,7 @@ function ftp_uploader_render_file_manager_page_cb()
                             $('#file-manager-list').html('<tr><td colspan="4" class="empty-state">' + (response.data.message || 'Error loading files') + '</td></tr>');
                         }
                     },
-                    error: function() {
+                    error: function () {
                         hideLoading();
                         showMessage('Network error occurred', 'error');
                         $('#file-manager-list').html('<tr><td colspan="4" class="empty-state">Network error occurred</td></tr>');
@@ -2709,17 +2767,17 @@ function ftp_uploader_render_file_manager_page_cb()
             // Render files
             function renderFiles(items) {
                 var $tbody = $('#file-manager-list');
-                
+
                 if (items.length === 0) {
                     $tbody.html('<tr><td colspan="4" class="empty-state">This directory is empty</td></tr>');
                     return;
                 }
 
                 var html = '';
-                items.forEach(function(item) {
+                items.forEach(function (item) {
                     var icon = item.is_directory ? 'dashicons-portfolio' : 'dashicons-media-default';
                     var size = item.is_directory ? '-' : item.size_formatted;
-                    
+
                     html += '<tr>';
                     html += '<td><span class="dashicons ' + icon + ' file-icon"></span></td>';
                     html += '<td>';
@@ -2749,23 +2807,23 @@ function ftp_uploader_render_file_manager_page_cb()
                     html += '</td>';
                     html += '</tr>';
                 });
-                
+
                 $tbody.html(html);
             }
 
             // Render breadcrumb
             function renderBreadcrumb(path) {
                 var $breadcrumb = $('#file-manager-breadcrumb');
-                var parts = path ? path.split('/').filter(function(p) { return p; }) : [];
-                
+                var parts = path ? path.split('/').filter(function (p) { return p; }) : [];
+
                 var html = '<a href="#" data-path="">Root</a>';
                 var current = '';
-                
-                parts.forEach(function(part) {
+
+                parts.forEach(function (part) {
                     current += (current ? '/' : '') + part;
                     html += ' <span>/</span> <a href="#" data-path="' + escapeHtml(current) + '">' + escapeHtml(part) + '</a>';
                 });
-                
+
                 $breadcrumb.html(html);
             }
 
@@ -2778,38 +2836,38 @@ function ftp_uploader_render_file_manager_page_cb()
                     '"': '&quot;',
                     "'": '&#039;'
                 };
-                return text.replace(/[&<>"']/g, function(m) { return map[m]; });
+                return text.replace(/[&<>"']/g, function (m) { return map[m]; });
             }
 
             // Navigate to directory
-            $(document).on('click', '.file-name[data-path]', function(e) {
+            $(document).on('click', '.file-name[data-path]', function (e) {
                 e.preventDefault();
                 var path = $(this).data('path');
                 loadFiles(path);
             });
 
             // Breadcrumb navigation
-            $(document).on('click', '.file-manager-breadcrumb a', function(e) {
+            $(document).on('click', '.file-manager-breadcrumb a', function (e) {
                 e.preventDefault();
                 var path = $(this).data('path') || '';
                 loadFiles(path);
             });
 
             // Create folder
-            $('#create-folder-btn').on('click', function() {
+            $('#create-folder-btn').on('click', function () {
                 $('#create-folder-modal').fadeIn();
                 $('#folder-name').focus();
             });
 
-            $('#close-create-modal, #cancel-create-folder').on('click', function() {
+            $('#close-create-modal, #cancel-create-folder').on('click', function () {
                 $('#create-folder-modal').fadeOut();
                 $('#folder-name').val('');
             });
 
-            $('#create-folder-form').on('submit', function(e) {
+            $('#create-folder-form').on('submit', function (e) {
                 e.preventDefault();
                 var folderName = $('#folder-name').val().trim();
-                
+
                 if (!folderName) {
                     showMessage('Please enter a folder name', 'error');
                     return;
@@ -2824,7 +2882,7 @@ function ftp_uploader_render_file_manager_page_cb()
                         dir_name: folderName,
                         path: currentPath
                     },
-                    success: function(response) {
+                    success: function (response) {
                         if (response.success) {
                             showMessage('Folder created successfully', 'success');
                             $('#create-folder-modal').fadeOut();
@@ -2834,18 +2892,18 @@ function ftp_uploader_render_file_manager_page_cb()
                             showMessage(response.data.message || 'Failed to create folder', 'error');
                         }
                     },
-                    error: function() {
+                    error: function () {
                         showMessage('Network error occurred', 'error');
                     }
                 });
             });
 
             // Delete file
-            $(document).on('click', '.delete-file-btn', function() {
+            $(document).on('click', '.delete-file-btn', function () {
                 var $btn = $(this);
                 var filePath = $btn.data('path');
                 var fileName = $btn.data('name');
-                
+
                 if (!confirm('Are you sure you want to delete "' + fileName + '"? This action cannot be undone.')) {
                     return;
                 }
@@ -2858,7 +2916,7 @@ function ftp_uploader_render_file_manager_page_cb()
                         nonce: '<?php echo esc_js(wp_create_nonce('ftp_file_manager_nonce')); ?>',
                         file_path: filePath
                     },
-                    success: function(response) {
+                    success: function (response) {
                         if (response.success) {
                             showMessage('File deleted successfully', 'success');
                             loadFiles(currentPath);
@@ -2866,18 +2924,18 @@ function ftp_uploader_render_file_manager_page_cb()
                             showMessage(response.data.message || 'Failed to delete file', 'error');
                         }
                     },
-                    error: function() {
+                    error: function () {
                         showMessage('Network error occurred', 'error');
                     }
                 });
             });
 
             // Delete directory
-            $(document).on('click', '.delete-dir-btn', function() {
+            $(document).on('click', '.delete-dir-btn', function () {
                 var $btn = $(this);
                 var dirPath = $btn.data('path');
                 var dirName = $btn.data('name');
-                
+
                 if (!confirm('Are you sure you want to delete the folder "' + dirName + '" and all its contents? This action cannot be undone.')) {
                     return;
                 }
@@ -2890,7 +2948,7 @@ function ftp_uploader_render_file_manager_page_cb()
                         nonce: '<?php echo esc_js(wp_create_nonce('ftp_file_manager_nonce')); ?>',
                         dir_path: dirPath
                     },
-                    success: function(response) {
+                    success: function (response) {
                         if (response.success) {
                             showMessage('Directory deleted successfully', 'success');
                             loadFiles(currentPath);
@@ -2898,7 +2956,7 @@ function ftp_uploader_render_file_manager_page_cb()
                             showMessage(response.data.message || 'Failed to delete directory', 'error');
                         }
                     },
-                    error: function() {
+                    error: function () {
                         showMessage('Network error occurred', 'error');
                     }
                 });
@@ -2914,7 +2972,7 @@ function ftp_uploader_render_file_manager_page_cb()
             function loadDestinationList(path) {
                 destinationPath = path || '';
                 showLoading();
-                
+
                 $.ajax({
                     url: ajaxurl,
                     type: 'POST',
@@ -2923,7 +2981,7 @@ function ftp_uploader_render_file_manager_page_cb()
                         nonce: '<?php echo esc_js(wp_create_nonce('ftp_file_manager_nonce')); ?>',
                         path: destinationPath
                     },
-                    success: function(response) {
+                    success: function (response) {
                         hideLoading();
                         if (response.success) {
                             renderDestinationFiles(response.data.items);
@@ -2932,7 +2990,7 @@ function ftp_uploader_render_file_manager_page_cb()
                             $('#destination-list').html('<div class="empty-state">' + (response.data.message || 'Error loading files') + '</div>');
                         }
                     },
-                    error: function() {
+                    error: function () {
                         hideLoading();
                         $('#destination-list').html('<div class="empty-state">Network error occurred</div>');
                     }
@@ -2942,16 +3000,16 @@ function ftp_uploader_render_file_manager_page_cb()
             // Render destination files (only directories)
             function renderDestinationFiles(items) {
                 var $list = $('#destination-list');
-                
+
                 var html = '<div style="margin-bottom: 10px;"><a href="#" class="destination-dir" data-path="' + escapeHtml(destinationPath ? destinationPath.split('/').slice(0, -1).join('/') : '') + '">';
                 html += '<span class="dashicons dashicons-arrow-up-alt"></span> .. (Parent Directory)</a></div>';
-                
-                var dirs = items.filter(function(item) { return item.is_directory; });
-                
+
+                var dirs = items.filter(function (item) { return item.is_directory; });
+
                 if (dirs.length === 0) {
                     html += '<div class="empty-state">No subdirectories found</div>';
                 } else {
-                    dirs.forEach(function(item) {
+                    dirs.forEach(function (item) {
                         html += '<div style="margin-bottom: 8px; padding: 8px; border: 1px solid #e5e5e5; cursor: pointer;" class="destination-dir-item">';
                         html += '<a href="#" class="destination-dir" data-path="' + escapeHtml(item.path) + '" style="display: flex; align-items: center; text-decoration: none;">';
                         html += '<span class="dashicons dashicons-portfolio" style="margin-right: 8px;"></span>';
@@ -2959,28 +3017,28 @@ function ftp_uploader_render_file_manager_page_cb()
                         html += '</a></div>';
                     });
                 }
-                
+
                 $list.html(html);
             }
 
             // Render destination breadcrumb
             function renderDestinationBreadcrumb(path) {
                 var $breadcrumb = $('#destination-breadcrumb');
-                var parts = path ? path.split('/').filter(function(p) { return p; }) : [];
-                
+                var parts = path ? path.split('/').filter(function (p) { return p; }) : [];
+
                 var html = '<a href="#" class="destination-breadcrumb-link" data-path="">Root</a>';
                 var current = '';
-                
-                parts.forEach(function(part) {
+
+                parts.forEach(function (part) {
                     current += (current ? '/' : '') + part;
                     html += ' <span>/</span> <a href="#" class="destination-breadcrumb-link" data-path="' + escapeHtml(current) + '">' + escapeHtml(part) + '</a>';
                 });
-                
+
                 $breadcrumb.html(html);
             }
 
             // Move item button
-            $(document).on('click', '.move-item-btn', function() {
+            $(document).on('click', '.move-item-btn', function () {
                 var $btn = $(this);
                 pendingAction = 'move';
                 pendingSourcePath = $btn.data('path');
@@ -2991,7 +3049,7 @@ function ftp_uploader_render_file_manager_page_cb()
             });
 
             // Copy item button
-            $(document).on('click', '.copy-item-btn', function() {
+            $(document).on('click', '.copy-item-btn', function () {
                 var $btn = $(this);
                 pendingAction = 'copy';
                 pendingSourcePath = $btn.data('path');
@@ -3002,21 +3060,21 @@ function ftp_uploader_render_file_manager_page_cb()
             });
 
             // Destination directory navigation
-            $(document).on('click', '.destination-dir', function(e) {
+            $(document).on('click', '.destination-dir', function (e) {
                 e.preventDefault();
                 var path = $(this).data('path') || '';
                 loadDestinationList(path);
             });
 
             // Destination breadcrumb navigation
-            $(document).on('click', '.destination-breadcrumb-link', function(e) {
+            $(document).on('click', '.destination-breadcrumb-link', function (e) {
                 e.preventDefault();
                 var path = $(this).data('path') || '';
                 loadDestinationList(path);
             });
 
             // Confirm destination
-            $('#confirm-destination-btn').on('click', function() {
+            $('#confirm-destination-btn').on('click', function () {
                 if (!pendingAction || !pendingSourcePath) {
                     return;
                 }
@@ -3033,7 +3091,7 @@ function ftp_uploader_render_file_manager_page_cb()
                         source_path: pendingSourcePath,
                         destination_path: destinationPath
                     },
-                    success: function(response) {
+                    success: function (response) {
                         if (response.success) {
                             showMessage('Item ' + actionText + 'ed successfully', 'success');
                             $('#destination-modal').fadeOut();
@@ -3046,14 +3104,14 @@ function ftp_uploader_render_file_manager_page_cb()
                             showMessage(response.data.message || 'Failed to ' + actionText + ' item', 'error');
                         }
                     },
-                    error: function() {
+                    error: function () {
                         showMessage('Network error occurred', 'error');
                     }
                 });
             });
 
             // Close destination modal
-            $('#close-destination-modal, #cancel-destination-btn').on('click', function() {
+            $('#close-destination-modal, #cancel-destination-btn').on('click', function () {
                 $('#destination-modal').fadeOut();
                 pendingAction = null;
                 pendingSourcePath = null;
@@ -3062,7 +3120,7 @@ function ftp_uploader_render_file_manager_page_cb()
             });
 
             // Refresh
-            $('#refresh-btn').on('click', function() {
+            $('#refresh-btn').on('click', function () {
                 loadFiles(currentPath);
             });
 

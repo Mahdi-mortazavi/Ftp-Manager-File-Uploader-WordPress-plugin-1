@@ -1,0 +1,1198 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FTP Manager — Premium Dashboard</title>
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Inter Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Phosphor Icons -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+    <!-- Tailwind Config -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                    },
+                    colors: {
+                        apple: {
+                            bg: '#f5f5f7',
+                            blue: '#0071e3',
+                            blueHover: '#0077ed',
+                            text: '#1d1d1f',
+                            textSecondary: '#86868b',
+                            success: '#34c759',
+                            warning: '#ff9f0a',
+                            error: '#ff3b30',
+                        }
+                    },
+                    boxShadow: {
+                        'apple': '0 4px 24px -4px rgba(0,0,0,0.08)',
+                        'apple-lg': '0 8px 32px -8px rgba(0,0,0,0.12)',
+                        'apple-inset': 'inset 0 1px 2px rgba(0,0,0,0.06)',
+                    },
+                    borderRadius: {
+                        'apple': '12px',
+                        'apple-lg': '16px',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* ═══════════════════════════════════════════════════════════════
+           CUSTOM CSS - Apple Design System
+           ═══════════════════════════════════════════════════════════════ */
+
+        /* Glassmorphism */
+        .glass {
+            background: rgba(255, 255, 255, 0.72);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+
+        .glass-strong {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(40px);
+            -webkit-backdrop-filter: blur(40px);
+        }
+
+        /* Tab Indicator Animation */
+        .tab-indicator {
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* Input Focus Ring */
+        .input-apple {
+            transition: all 0.2s ease;
+        }
+
+        .input-apple:focus {
+            box-shadow: 0 0 0 4px rgba(0, 113, 227, 0.2);
+        }
+
+        /* Progress Bar Animation */
+        .progress-shimmer {
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+            animation: shimmer 1.5s infinite;
+        }
+
+        @keyframes shimmer {
+            0% {
+                transform: translateX(-100%);
+            }
+
+            100% {
+                transform: translateX(100%);
+            }
+        }
+
+        /* Fade In Animation */
+        .fade-in {
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(8px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Slide Up Animation for Toast */
+        .toast-slide {
+            animation: toastSlide 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        @keyframes toastSlide {
+            from {
+                opacity: 0;
+                transform: translateY(16px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Drag Over State */
+        .drop-zone.drag-over {
+            border-color: #0071e3;
+            background: rgba(0, 113, 227, 0.05);
+        }
+
+        /* File Card Hover */
+        .file-card {
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            opacity: 1;
+        }
+
+        .file-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 40px -12px rgba(0, 0, 0, 0.15);
+        }
+
+        .file-card:active {
+            transform: translateY(-2px) scale(0.98);
+        }
+
+        /* File Grid Container - Smooth transitions */
+        #file-grid {
+            transition: opacity 0.2s ease;
+        }
+
+        #file-grid.transitioning {
+            opacity: 0.5;
+        }
+
+        /* Card Fade In Animation */
+        .file-card-enter {
+            animation: cardFadeIn 0.3s ease forwards;
+        }
+
+        @keyframes cardFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(8px) scale(0.95);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        /* Staggered animation for cards */
+        .file-card:nth-child(1) {
+            animation-delay: 0ms;
+        }
+
+        .file-card:nth-child(2) {
+            animation-delay: 30ms;
+        }
+
+        .file-card:nth-child(3) {
+            animation-delay: 60ms;
+        }
+
+        .file-card:nth-child(4) {
+            animation-delay: 90ms;
+        }
+
+        .file-card:nth-child(5) {
+            animation-delay: 120ms;
+        }
+
+        .file-card:nth-child(6) {
+            animation-delay: 150ms;
+        }
+
+        .file-card:nth-child(7) {
+            animation-delay: 180ms;
+        }
+
+        .file-card:nth-child(8) {
+            animation-delay: 210ms;
+        }
+
+        /* Spin Animation */
+        .animate-spin-slow {
+            animation: spin 1.5s linear infinite;
+        }
+
+        @keyframes spin {
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Status Pill Pulse */
+        .pulse-dot {
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.5;
+            }
+        }
+
+        /* Scrollbar Styling */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: rgba(0, 0, 0, 0.15);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(0, 0, 0, 0.25);
+        }
+    </style>
+</head>
+
+<body class="bg-apple-bg font-sans antialiased min-h-screen">
+    <!-- ═══════════════════════════════════════════════════════════════
+         MAIN APP CONTAINER
+         ═══════════════════════════════════════════════════════════════ -->
+    <div class="max-w-5xl mx-auto px-6 py-8">
+
+        <!-- Header -->
+        <header class="flex items-center justify-between mb-8">
+            <div class="flex items-center gap-3">
+                <div
+                    class="w-10 h-10 bg-gradient-to-br from-apple-blue to-blue-600 rounded-apple flex items-center justify-center">
+                    <i class="ph-bold ph-cloud-arrow-up text-white text-xl"></i>
+                </div>
+                <div>
+                    <h1 class="text-xl font-semibold text-apple-text">FTP Manager</h1>
+                    <p class="text-sm text-apple-textSecondary">File Upload Dashboard</p>
+                </div>
+            </div>
+
+            <!-- Connection Status Badge -->
+            <div id="connection-badge"
+                class="flex items-center gap-2 px-4 py-2 rounded-full glass border border-white/50 shadow-apple">
+                <span class="w-2 h-2 rounded-full bg-apple-success pulse-dot" id="status-dot"></span>
+                <span class="text-sm font-medium text-apple-text" id="status-text">Connected</span>
+            </div>
+        </header>
+
+        <!-- Tab Navigation (iOS Segmented Control) -->
+        <nav class="relative mb-8">
+            <div class="glass rounded-apple-lg p-1.5 border border-white/60 shadow-apple inline-flex">
+                <div class="relative flex" id="tab-container">
+                    <!-- Tab Indicator (animated background) -->
+                    <div id="tab-indicator"
+                        class="tab-indicator absolute top-0 left-0 h-full bg-white rounded-apple shadow-md"></div>
+
+                    <!-- Tab Buttons -->
+                    <button
+                        class="tab-btn relative z-10 px-5 py-2.5 text-sm font-medium rounded-apple transition-colors"
+                        data-tab="settings">
+                        <i class="ph ph-gear mr-2"></i>Settings
+                    </button>
+                    <button
+                        class="tab-btn relative z-10 px-5 py-2.5 text-sm font-medium rounded-apple transition-colors"
+                        data-tab="url-upload">
+                        <i class="ph ph-link mr-2"></i>URL Upload
+                    </button>
+                    <button
+                        class="tab-btn relative z-10 px-5 py-2.5 text-sm font-medium rounded-apple transition-colors"
+                        data-tab="device-upload">
+                        <i class="ph ph-device-mobile mr-2"></i>Device Upload
+                    </button>
+                    <button
+                        class="tab-btn relative z-10 px-5 py-2.5 text-sm font-medium rounded-apple transition-colors"
+                        data-tab="file-manager">
+                        <i class="ph ph-folder-open mr-2"></i>File Manager
+                    </button>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Tab Panels Container -->
+        <main id="panels-container">
+
+            <!-- ═══════════════════════════════════════════════════════
+                 SETTINGS PANEL
+                 ═══════════════════════════════════════════════════════ -->
+            <section id="panel-settings" class="tab-panel fade-in">
+                <div class="bg-white rounded-apple-lg shadow-apple p-8 border border-black/5">
+                    <div class="flex items-center gap-3 mb-6">
+                        <div class="w-10 h-10 bg-apple-bg rounded-apple flex items-center justify-center">
+                            <i class="ph-bold ph-gear text-apple-textSecondary text-lg"></i>
+                        </div>
+                        <div>
+                            <h2 class="text-lg font-semibold text-apple-text">FTP Configuration</h2>
+                            <p class="text-sm text-apple-textSecondary">Configure your FTP server credentials</p>
+                        </div>
+                    </div>
+
+                    <form id="settings-form" class="space-y-5">
+                        <!-- FTP Host -->
+                        <div>
+                            <label class="block text-sm font-medium text-apple-text mb-2">FTP Host</label>
+                            <input type="text" id="ftp-host" placeholder="ftp.example.com"
+                                class="input-apple w-full px-4 py-3 bg-apple-bg border border-black/10 rounded-apple text-apple-text placeholder-apple-textSecondary focus:outline-none focus:border-apple-blue">
+                        </div>
+
+                        <!-- Username & Password Row -->
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-sm font-medium text-apple-text mb-2">Username</label>
+                                <input type="text" id="ftp-user" placeholder="admin"
+                                    class="input-apple w-full px-4 py-3 bg-apple-bg border border-black/10 rounded-apple text-apple-text placeholder-apple-textSecondary focus:outline-none focus:border-apple-blue">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-apple-text mb-2">Password</label>
+                                <div class="relative">
+                                    <input type="password" id="ftp-pass" placeholder="••••••••"
+                                        class="input-apple w-full px-4 py-3 pr-12 bg-apple-bg border border-black/10 rounded-apple text-apple-text placeholder-apple-textSecondary focus:outline-none focus:border-apple-blue">
+                                    <button type="button" id="toggle-password"
+                                        class="absolute right-3 top-1/2 -translate-y-1/2 text-apple-textSecondary hover:text-apple-text transition-colors">
+                                        <i class="ph ph-eye text-xl"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Base URL -->
+                        <div>
+                            <label class="block text-sm font-medium text-apple-text mb-2">Base URL (for public
+                                links)</label>
+                            <input type="url" id="base-url" placeholder="https://files.example.com/"
+                                class="input-apple w-full px-4 py-3 bg-apple-bg border border-black/10 rounded-apple text-apple-text placeholder-apple-textSecondary focus:outline-none focus:border-apple-blue">
+                        </div>
+
+                        <!-- Remote Path -->
+                        <div>
+                            <label class="block text-sm font-medium text-apple-text mb-2">Remote Folder Path</label>
+                            <input type="text" id="remote-path" placeholder="/public_html/uploads"
+                                class="input-apple w-full px-4 py-3 bg-apple-bg border border-black/10 rounded-apple text-apple-text placeholder-apple-textSecondary focus:outline-none focus:border-apple-blue">
+                        </div>
+
+                        <!-- Action Buttons -->
+                        <div class="flex items-center gap-3 pt-4">
+                            <button type="button" id="test-connection-btn"
+                                class="px-6 py-3 bg-apple-bg border border-black/10 rounded-apple text-sm font-medium text-apple-text hover:bg-gray-100 transition-colors flex items-center gap-2">
+                                <i class="ph ph-plugs-connected"></i>
+                                <span>Test Connection</span>
+                            </button>
+                            <button type="submit"
+                                class="px-6 py-3 bg-apple-blue hover:bg-apple-blueHover rounded-apple text-sm font-medium text-white transition-colors flex items-center gap-2 shadow-apple">
+                                <i class="ph ph-floppy-disk"></i>
+                                <span>Save Settings</span>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </section>
+
+            <!-- ═══════════════════════════════════════════════════════
+                 URL UPLOAD PANEL
+                 ═══════════════════════════════════════════════════════ -->
+            <section id="panel-url-upload" class="tab-panel hidden">
+                <div class="bg-white rounded-apple-lg shadow-apple p-8 border border-black/5 mb-6">
+                    <div class="flex items-center gap-3 mb-6">
+                        <div class="w-10 h-10 bg-apple-bg rounded-apple flex items-center justify-center">
+                            <i class="ph-bold ph-link text-apple-textSecondary text-lg"></i>
+                        </div>
+                        <div>
+                            <h2 class="text-lg font-semibold text-apple-text">Upload from URL</h2>
+                            <p class="text-sm text-apple-textSecondary">Download a file from URL and upload to FTP</p>
+                        </div>
+                    </div>
+
+                    <form id="url-upload-form" class="space-y-5">
+                        <div>
+                            <label class="block text-sm font-medium text-apple-text mb-2">File URL</label>
+                            <input type="url" id="file-url" placeholder="https://example.com/file.zip"
+                                class="input-apple w-full px-4 py-3 bg-apple-bg border border-black/10 rounded-apple text-apple-text placeholder-apple-textSecondary focus:outline-none focus:border-apple-blue">
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-sm font-medium text-apple-text mb-2">Remote Filename <span
+                                        class="text-apple-textSecondary">(optional)</span></label>
+                                <input type="text" id="url-remote-filename" placeholder="custom-name.zip"
+                                    class="input-apple w-full px-4 py-3 bg-apple-bg border border-black/10 rounded-apple text-apple-text placeholder-apple-textSecondary focus:outline-none focus:border-apple-blue">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-apple-text mb-2">Destination Folder</label>
+                                <select id="url-folder"
+                                    class="input-apple w-full px-4 py-3 bg-apple-bg border border-black/10 rounded-apple text-apple-text focus:outline-none focus:border-apple-blue">
+                                    <option value="">Root (Default)</option>
+                                    <option value="uploads">uploads</option>
+                                    <option value="uploads/2024">uploads/2024</option>
+                                    <option value="documents">documents</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <button type="submit"
+                            class="px-6 py-3 bg-apple-blue hover:bg-apple-blueHover rounded-apple text-sm font-medium text-white transition-colors flex items-center gap-2 shadow-apple">
+                            <i class="ph ph-upload-simple"></i>
+                            <span>Start Upload</span>
+                        </button>
+                    </form>
+
+                    <!-- Progress Bar (hidden by default) -->
+                    <div id="url-progress-container" class="hidden mt-6">
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="text-sm font-medium text-apple-text">Uploading...</span>
+                            <span id="url-progress-percent" class="text-sm text-apple-textSecondary">0%</span>
+                        </div>
+                        <div class="h-2 bg-apple-bg rounded-full overflow-hidden">
+                            <div id="url-progress-bar"
+                                class="h-full bg-gradient-to-r from-apple-blue to-blue-500 rounded-full relative"
+                                style="width: 0%">
+                                <div class="progress-shimmer absolute inset-0"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Upload History -->
+                <div class="bg-white rounded-apple-lg shadow-apple p-8 border border-black/5">
+                    <div class="flex items-center justify-between mb-6">
+                        <h3 class="text-lg font-semibold text-apple-text">Upload History</h3>
+                        <button id="refresh-history" class="p-2 rounded-apple hover:bg-apple-bg transition-colors">
+                            <i class="ph ph-arrow-clockwise text-apple-textSecondary"></i>
+                        </button>
+                    </div>
+
+                    <div id="upload-history" class="space-y-3">
+                        <!-- History items rendered by JS -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- ═══════════════════════════════════════════════════════
+                 DEVICE UPLOAD PANEL
+                 ═══════════════════════════════════════════════════════ -->
+            <section id="panel-device-upload" class="tab-panel hidden">
+                <div class="bg-white rounded-apple-lg shadow-apple p-8 border border-black/5 mb-6">
+                    <div class="flex items-center gap-3 mb-6">
+                        <div class="w-10 h-10 bg-apple-bg rounded-apple flex items-center justify-center">
+                            <i class="ph-bold ph-device-mobile text-apple-textSecondary text-lg"></i>
+                        </div>
+                        <div>
+                            <h2 class="text-lg font-semibold text-apple-text">Upload from Device</h2>
+                            <p class="text-sm text-apple-textSecondary">Drag & drop or select files to upload</p>
+                        </div>
+                    </div>
+
+                    <!-- Drop Zone -->
+                    <div id="drop-zone"
+                        class="drop-zone border-2 border-dashed border-gray-300 rounded-apple-lg p-12 text-center cursor-pointer hover:border-apple-blue hover:bg-blue-50/30 transition-all">
+                        <div class="flex flex-col items-center gap-4">
+                            <div class="w-16 h-16 bg-apple-bg rounded-full flex items-center justify-center">
+                                <i class="ph-light ph-cloud-arrow-up text-4xl text-apple-textSecondary"></i>
+                            </div>
+                            <div>
+                                <p class="text-apple-text font-medium">Drop files here or click to browse</p>
+                                <p class="text-sm text-apple-textSecondary mt-1">Supports ZIP, PDF, images, and
+                                    documents</p>
+                            </div>
+                        </div>
+                        <input type="file" id="file-input" multiple class="hidden">
+                    </div>
+
+                    <!-- Selected Files List -->
+                    <div id="selected-files-container" class="hidden mt-6">
+                        <h4 class="text-sm font-medium text-apple-text mb-3">Selected Files</h4>
+                        <div id="selected-files" class="space-y-2"></div>
+                    </div>
+
+                    <!-- Folder Selection -->
+                    <div class="mt-6">
+                        <label class="block text-sm font-medium text-apple-text mb-2">Destination Folder</label>
+                        <select id="device-folder"
+                            class="input-apple w-full md:w-1/2 px-4 py-3 bg-apple-bg border border-black/10 rounded-apple text-apple-text focus:outline-none focus:border-apple-blue">
+                            <option value="">Root (Default)</option>
+                            <option value="uploads">uploads</option>
+                            <option value="uploads/2024">uploads/2024</option>
+                        </select>
+                    </div>
+
+                    <!-- Upload Button -->
+                    <button type="button" id="upload-all-btn" disabled
+                        class="mt-6 px-6 py-3 bg-apple-blue hover:bg-apple-blueHover disabled:bg-gray-300 disabled:cursor-not-allowed rounded-apple text-sm font-medium text-white transition-colors flex items-center gap-2 shadow-apple">
+                        <i class="ph ph-upload-simple"></i>
+                        <span>Upload All Files</span>
+                    </button>
+                </div>
+            </section>
+
+            <!-- ═══════════════════════════════════════════════════════
+                 FILE MANAGER PANEL
+                 ═══════════════════════════════════════════════════════ -->
+            <section id="panel-file-manager" class="tab-panel hidden">
+                <div class="bg-white rounded-apple-lg shadow-apple p-8 border border-black/5">
+                    <div class="flex items-center justify-between mb-6">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 bg-apple-bg rounded-apple flex items-center justify-center">
+                                <i class="ph-bold ph-folder-open text-apple-textSecondary text-lg"></i>
+                            </div>
+                            <div>
+                                <h2 class="text-lg font-semibold text-apple-text">File Manager</h2>
+                                <p class="text-sm text-apple-textSecondary">Browse and manage your files</p>
+                            </div>
+                        </div>
+
+                        <!-- View Toggle & Actions -->
+                        <div class="flex items-center gap-2">
+                            <button id="view-grid" class="p-2 rounded-apple bg-apple-bg text-apple-text">
+                                <i class="ph ph-squares-four"></i>
+                            </button>
+                            <button id="view-list"
+                                class="p-2 rounded-apple text-apple-textSecondary hover:bg-apple-bg transition-colors">
+                                <i class="ph ph-list"></i>
+                            </button>
+                            <div class="w-px h-6 bg-gray-200 mx-2"></div>
+                            <button id="new-folder-btn"
+                                class="px-4 py-2 bg-apple-bg border border-black/10 rounded-apple text-sm font-medium text-apple-text hover:bg-gray-100 transition-colors flex items-center gap-2">
+                                <i class="ph ph-folder-plus"></i>
+                                <span>New Folder</span>
+                            </button>
+                            <button id="refresh-files-btn"
+                                class="p-2 rounded-apple hover:bg-apple-bg transition-colors">
+                                <i class="ph ph-arrow-clockwise text-apple-textSecondary"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Breadcrumb -->
+                    <div id="breadcrumb" class="flex items-center gap-2 mb-6 text-sm">
+                        <button class="breadcrumb-item text-apple-blue hover:underline font-medium"
+                            data-path="">Root</button>
+                    </div>
+
+                    <!-- File Grid -->
+                    <div id="file-grid" class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4 min-h-[200px]">
+                        <!-- Files rendered by JS -->
+                    </div>
+
+                    <!-- File List (hidden by default) -->
+                    <div id="file-list" class="hidden">
+                        <!-- List view rendered by JS -->
+                    </div>
+
+                    <!-- Empty State -->
+                    <div id="empty-state" class="hidden text-center py-16">
+                        <div class="w-20 h-20 bg-apple-bg rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="ph-light ph-folder-open text-4xl text-apple-textSecondary"></i>
+                        </div>
+                        <p class="text-apple-text font-medium">This folder is empty</p>
+                        <p class="text-sm text-apple-textSecondary mt-1">Upload files or create a folder to get started
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+
+        <!-- Footer -->
+        <footer class="mt-12 text-center text-sm text-apple-textSecondary">
+            <p>Made with 🧠🩸❤️ by <a href="https://t.me/ageek" target="_blank"
+                    class="text-apple-blue hover:underline">Aref</a> & Mahdi</p>
+        </footer>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════════
+         TOAST NOTIFICATION CONTAINER
+         ═══════════════════════════════════════════════════════════════ -->
+    <div id="toast-container" class="fixed bottom-6 right-6 z-50 space-y-3"></div>
+
+    <!-- ═══════════════════════════════════════════════════════════════
+         MODAL CONTAINER
+         ═══════════════════════════════════════════════════════════════ -->
+    <div id="modal-backdrop"
+        class="fixed inset-0 bg-black/50 backdrop-blur-sm z-40 hidden opacity-0 transition-opacity"></div>
+    <div id="modal-container" class="fixed inset-0 flex items-center justify-center z-50 hidden">
+        <div id="modal-content"
+            class="bg-white rounded-apple-lg shadow-apple-lg p-6 w-full max-w-md mx-4 transform scale-95 opacity-0 transition-all">
+            <!-- Modal content injected by JS -->
+        </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════════
+         JAVASCRIPT - FTPManager Namespace
+         ═══════════════════════════════════════════════════════════════ -->
+    <script>
+        /**
+         * FTPManager Application
+         * Modular architecture with namespace pattern
+         * @author Senior Frontend Architect
+         */
+        const FTPManager = {
+            // ═══════════════════════════════════════════════════════
+            // STATE MANAGEMENT
+            // ═══════════════════════════════════════════════════════
+            state: {
+                currentTab: 'settings',
+                isConnected: true,
+                currentPath: '',
+                viewMode: 'grid',
+                selectedFiles: [],
+                uploads: [
+                    { id: 1, name: 'backup-2024.zip', status: 'success', url: 'https://files.example.com/backup-2024.zip' },
+                    { id: 2, name: 'document.pdf', status: 'uploading', progress: 67 },
+                    { id: 3, name: 'image-pack.zip', status: 'pending' },
+                    { id: 4, name: 'corrupted.zip', status: 'error', message: 'Connection timeout' }
+                ],
+                files: [
+                    { name: 'uploads', isDir: true, items: 12 },
+                    { name: 'documents', isDir: true, items: 5 },
+                    { name: 'images', isDir: true, items: 24 },
+                    { name: 'readme.txt', isDir: false, size: '2.3 KB' },
+                    { name: 'banner.png', isDir: false, size: '456 KB' },
+                    { name: 'backup.zip', isDir: false, size: '15.2 MB' },
+                    { name: 'config.json', isDir: false, size: '1.2 KB' },
+                    { name: 'styles.css', isDir: false, size: '89 KB' }
+                ]
+            },
+
+            // ═══════════════════════════════════════════════════════
+            // INITIALIZATION
+            // ═══════════════════════════════════════════════════════
+            init() {
+                this.bindTabEvents();
+                this.bindSettingsEvents();
+                this.bindUrlUploadEvents();
+                this.bindDeviceUploadEvents();
+                this.bindFileManagerEvents();
+                this.updateTabIndicator();
+                this.renderUploadHistory();
+                this.renderFileManager();
+                console.log('✅ FTPManager initialized');
+            },
+
+            // ═══════════════════════════════════════════════════════
+            // TAB MANAGEMENT
+            // ═══════════════════════════════════════════════════════
+            bindTabEvents() {
+                document.querySelectorAll('.tab-btn').forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        this.switchTab(btn.dataset.tab);
+                    });
+                });
+            },
+
+            switchTab(tabId) {
+                this.state.currentTab = tabId;
+
+                // Update button styles
+                document.querySelectorAll('.tab-btn').forEach(btn => {
+                    btn.classList.toggle('text-apple-text', btn.dataset.tab === tabId);
+                    btn.classList.toggle('text-apple-textSecondary', btn.dataset.tab !== tabId);
+                });
+
+                // Update panels
+                document.querySelectorAll('.tab-panel').forEach(panel => {
+                    panel.classList.add('hidden');
+                    panel.classList.remove('fade-in');
+                });
+
+                const activePanel = document.getElementById(`panel-${tabId}`);
+                if (activePanel) {
+                    activePanel.classList.remove('hidden');
+                    setTimeout(() => activePanel.classList.add('fade-in'), 10);
+                }
+
+                this.updateTabIndicator();
+            },
+
+            updateTabIndicator() {
+                const activeBtn = document.querySelector(`.tab-btn[data-tab="${this.state.currentTab}"]`);
+                const indicator = document.getElementById('tab-indicator');
+                if (activeBtn && indicator) {
+                    indicator.style.width = `${activeBtn.offsetWidth}px`;
+                    indicator.style.transform = `translateX(${activeBtn.offsetLeft}px)`;
+                }
+            },
+
+            // ═══════════════════════════════════════════════════════
+            // UI HELPERS
+            // ═══════════════════════════════════════════════════════
+            UI: {
+                showToast(message, type = 'success') {
+                    const container = document.getElementById('toast-container');
+                    const toast = document.createElement('div');
+
+                    const icons = { success: 'check-circle', error: 'x-circle', warning: 'warning', info: 'info' };
+                    const colors = { success: 'bg-apple-success', error: 'bg-apple-error', warning: 'bg-apple-warning', info: 'bg-apple-blue' };
+
+                    toast.className = `toast-slide flex items-center gap-3 px-5 py-4 bg-white rounded-apple shadow-apple-lg border border-black/5`;
+                    toast.innerHTML = `
+                        <div class="w-6 h-6 ${colors[type]} rounded-full flex items-center justify-center">
+                            <i class="ph-bold ph-${icons[type]} text-white text-sm"></i>
+                        </div>
+                        <span class="text-sm font-medium text-apple-text">${message}</span>
+                    `;
+
+                    container.appendChild(toast);
+                    setTimeout(() => {
+                        toast.style.opacity = '0';
+                        toast.style.transform = 'translateX(100%)';
+                        setTimeout(() => toast.remove(), 300);
+                    }, 3000);
+                },
+
+                showModal(title, content, actions) {
+                    const backdrop = document.getElementById('modal-backdrop');
+                    const container = document.getElementById('modal-container');
+                    const modal = document.getElementById('modal-content');
+
+                    modal.innerHTML = `
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="text-lg font-semibold text-apple-text">${title}</h3>
+                            <button id="modal-close" class="p-1 rounded-lg hover:bg-apple-bg transition-colors">
+                                <i class="ph ph-x text-xl text-apple-textSecondary"></i>
+                            </button>
+                        </div>
+                        <div class="mb-6">${content}</div>
+                        <div class="flex justify-end gap-3">${actions}</div>
+                    `;
+
+                    backdrop.classList.remove('hidden');
+                    container.classList.remove('hidden');
+                    setTimeout(() => {
+                        backdrop.classList.add('opacity-100');
+                        modal.classList.add('scale-100', 'opacity-100');
+                    }, 10);
+
+                    document.getElementById('modal-close').onclick = () => this.hideModal();
+                    backdrop.onclick = () => this.hideModal();
+                },
+
+                hideModal() {
+                    const backdrop = document.getElementById('modal-backdrop');
+                    const container = document.getElementById('modal-container');
+                    const modal = document.getElementById('modal-content');
+
+                    backdrop.classList.remove('opacity-100');
+                    modal.classList.remove('scale-100', 'opacity-100');
+                    setTimeout(() => {
+                        backdrop.classList.add('hidden');
+                        container.classList.add('hidden');
+                    }, 200);
+                }
+            },
+
+            // ═══════════════════════════════════════════════════════
+            // SETTINGS MODULE
+            // ═══════════════════════════════════════════════════════
+            bindSettingsEvents() {
+                // Toggle password visibility
+                document.getElementById('toggle-password')?.addEventListener('click', () => {
+                    const input = document.getElementById('ftp-pass');
+                    const icon = document.querySelector('#toggle-password i');
+                    if (input.type === 'password') {
+                        input.type = 'text';
+                        icon.className = 'ph ph-eye-slash text-xl';
+                    } else {
+                        input.type = 'password';
+                        icon.className = 'ph ph-eye text-xl';
+                    }
+                });
+
+                // Test connection
+                document.getElementById('test-connection-btn')?.addEventListener('click', () => {
+                    const btn = document.getElementById('test-connection-btn');
+                    btn.innerHTML = '<i class="ph ph-spinner animate-spin-slow"></i><span>Testing...</span>';
+                    btn.disabled = true;
+
+                    setTimeout(() => {
+                        btn.innerHTML = '<i class="ph ph-plugs-connected"></i><span>Test Connection</span>';
+                        btn.disabled = false;
+                        this.UI.showToast('Connection successful!', 'success');
+                    }, 1500);
+                });
+
+                // Save settings
+                document.getElementById('settings-form')?.addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    this.UI.showToast('Settings saved successfully!', 'success');
+                });
+            },
+
+            // ═══════════════════════════════════════════════════════
+            // URL UPLOAD MODULE
+            // ═══════════════════════════════════════════════════════
+            bindUrlUploadEvents() {
+                document.getElementById('url-upload-form')?.addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    this.simulateUrlUpload();
+                });
+
+                document.getElementById('refresh-history')?.addEventListener('click', () => {
+                    this.renderUploadHistory();
+                    this.UI.showToast('History refreshed', 'info');
+                });
+            },
+
+            simulateUrlUpload() {
+                const progressContainer = document.getElementById('url-progress-container');
+                const progressBar = document.getElementById('url-progress-bar');
+                const progressPercent = document.getElementById('url-progress-percent');
+
+                progressContainer.classList.remove('hidden');
+                let progress = 0;
+
+                const interval = setInterval(() => {
+                    progress += Math.random() * 15;
+                    if (progress >= 100) {
+                        progress = 100;
+                        clearInterval(interval);
+                        setTimeout(() => {
+                            progressContainer.classList.add('hidden');
+                            progressBar.style.width = '0%';
+                            this.UI.showToast('File uploaded successfully!', 'success');
+                        }, 500);
+                    }
+                    progressBar.style.width = `${progress}%`;
+                    progressPercent.textContent = `${Math.round(progress)}%`;
+                }, 200);
+            },
+
+            renderUploadHistory() {
+                const container = document.getElementById('upload-history');
+                if (!container) return;
+
+                const statusConfig = {
+                    success: { icon: 'check-circle', color: 'text-apple-success', bg: 'bg-green-50', label: 'Success' },
+                    uploading: { icon: 'spinner', color: 'text-apple-warning', bg: 'bg-yellow-50', label: 'Uploading' },
+                    pending: { icon: 'clock', color: 'text-apple-textSecondary', bg: 'bg-gray-50', label: 'Pending' },
+                    error: { icon: 'warning', color: 'text-apple-error', bg: 'bg-red-50', label: 'Failed' }
+                };
+
+                container.innerHTML = this.state.uploads.map(upload => {
+                    const config = statusConfig[upload.status];
+                    const spinClass = upload.status === 'uploading' ? 'animate-spin-slow' : '';
+
+                    return `
+                        <div class="flex items-center justify-between p-4 ${config.bg} rounded-apple">
+                            <div class="flex items-center gap-3">
+                                <i class="ph-bold ph-file text-xl text-apple-textSecondary"></i>
+                                <div>
+                                    <p class="font-medium text-apple-text">${upload.name}</p>
+                                    ${upload.message ? `<p class="text-xs text-apple-error">${upload.message}</p>` : ''}
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-4">
+                                <div class="flex items-center gap-2 ${config.color}">
+                                    <i class="ph ph-${config.icon} ${spinClass}"></i>
+                                    <span class="text-sm font-medium">${config.label}</span>
+                                    ${upload.progress ? `<span class="text-xs">(${upload.progress}%)</span>` : ''}
+                                </div>
+                                ${upload.status === 'success' ? `
+                                    <button onclick="FTPManager.copyLink('${upload.url}')" class="px-3 py-1.5 bg-white border border-black/10 rounded-lg text-xs font-medium text-apple-text hover:bg-gray-50 transition-colors flex items-center gap-1">
+                                        <i class="ph ph-copy"></i> Copy Link
+                                    </button>
+                                ` : ''}
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+            },
+
+            copyLink(url) {
+                navigator.clipboard.writeText(url);
+                this.UI.showToast('Link copied to clipboard!', 'success');
+            },
+
+            // ═══════════════════════════════════════════════════════
+            // DEVICE UPLOAD MODULE
+            // ═══════════════════════════════════════════════════════
+            bindDeviceUploadEvents() {
+                const dropZone = document.getElementById('drop-zone');
+                const fileInput = document.getElementById('file-input');
+
+                if (!dropZone || !fileInput) return;
+
+                // Click to browse
+                dropZone.addEventListener('click', () => fileInput.click());
+
+                // File selection
+                fileInput.addEventListener('change', (e) => {
+                    this.handleFileSelect(Array.from(e.target.files));
+                });
+
+                // Drag events
+                dropZone.addEventListener('dragover', (e) => {
+                    e.preventDefault();
+                    dropZone.classList.add('drag-over');
+                });
+
+                dropZone.addEventListener('dragleave', () => {
+                    dropZone.classList.remove('drag-over');
+                });
+
+                dropZone.addEventListener('drop', (e) => {
+                    e.preventDefault();
+                    dropZone.classList.remove('drag-over');
+                    this.handleFileSelect(Array.from(e.dataTransfer.files));
+                });
+
+                // Upload all
+                document.getElementById('upload-all-btn')?.addEventListener('click', () => {
+                    this.UI.showToast('Upload started!', 'info');
+                    this.state.selectedFiles = [];
+                    this.renderSelectedFiles();
+                });
+            },
+
+            handleFileSelect(files) {
+                this.state.selectedFiles = [...this.state.selectedFiles, ...files];
+                this.renderSelectedFiles();
+            },
+
+            renderSelectedFiles() {
+                const container = document.getElementById('selected-files-container');
+                const list = document.getElementById('selected-files');
+                const uploadBtn = document.getElementById('upload-all-btn');
+
+                if (this.state.selectedFiles.length === 0) {
+                    container.classList.add('hidden');
+                    uploadBtn.disabled = true;
+                    return;
+                }
+
+                container.classList.remove('hidden');
+                uploadBtn.disabled = false;
+
+                const fileIcons = { 'pdf': 'file-pdf', 'zip': 'file-zip', 'png': 'file-image', 'jpg': 'file-image', 'jpeg': 'file-image' };
+
+                list.innerHTML = this.state.selectedFiles.map((file, index) => {
+                    const ext = file.name.split('.').pop().toLowerCase();
+                    const icon = fileIcons[ext] || 'file';
+                    const size = this.formatFileSize(file.size);
+
+                    return `
+                        <div class="flex items-center justify-between p-3 bg-apple-bg rounded-apple">
+                            <div class="flex items-center gap-3">
+                                <i class="ph ph-${icon} text-xl text-apple-textSecondary"></i>
+                                <div>
+                                    <p class="font-medium text-apple-text text-sm">${file.name}</p>
+                                    <p class="text-xs text-apple-textSecondary">${size}</p>
+                                </div>
+                            </div>
+                            <button onclick="FTPManager.removeFile(${index})" class="p-1 rounded-lg hover:bg-white transition-colors">
+                                <i class="ph ph-x text-apple-textSecondary"></i>
+                            </button>
+                        </div>
+                    `;
+                }).join('');
+            },
+
+            removeFile(index) {
+                this.state.selectedFiles.splice(index, 1);
+                this.renderSelectedFiles();
+            },
+
+            formatFileSize(bytes) {
+                if (bytes < 1024) return bytes + ' B';
+                if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+                return (bytes / (1024 * 1024)).toFixed(1) + ' MB';
+            },
+
+            // ═══════════════════════════════════════════════════════
+            // FILE MANAGER MODULE
+            // ═══════════════════════════════════════════════════════
+            bindFileManagerEvents() {
+                document.getElementById('view-grid')?.addEventListener('click', () => this.setViewMode('grid'));
+                document.getElementById('view-list')?.addEventListener('click', () => this.setViewMode('list'));
+                document.getElementById('refresh-files-btn')?.addEventListener('click', () => {
+                    this.renderFileManager();
+                    this.UI.showToast('Files refreshed', 'info');
+                });
+                document.getElementById('new-folder-btn')?.addEventListener('click', () => this.showNewFolderModal());
+            },
+
+            setViewMode(mode) {
+                this.state.viewMode = mode;
+                document.getElementById('view-grid').classList.toggle('bg-apple-bg', mode === 'grid');
+                document.getElementById('view-grid').classList.toggle('text-apple-text', mode === 'grid');
+                document.getElementById('view-list').classList.toggle('bg-apple-bg', mode === 'list');
+                document.getElementById('view-list').classList.toggle('text-apple-text', mode === 'list');
+                this.renderFileManager();
+            },
+
+            renderFileManager(animate = true) {
+                const grid = document.getElementById('file-grid');
+                const list = document.getElementById('file-list');
+                const empty = document.getElementById('empty-state');
+
+                if (this.state.files.length === 0) {
+                    grid.classList.add('hidden');
+                    list.classList.add('hidden');
+                    empty.classList.remove('hidden');
+                    return;
+                }
+
+                empty.classList.add('hidden');
+
+                if (this.state.viewMode === 'grid') {
+                    grid.classList.remove('hidden');
+                    list.classList.add('hidden');
+
+                    if (animate) {
+                        // Smooth transition: fade out, update, fade in
+                        grid.classList.add('transitioning');
+                        setTimeout(() => {
+                            grid.innerHTML = this.state.files.map(file => this.renderFileCard(file)).join('');
+                            grid.classList.remove('transitioning');
+                            // Add entrance animation to cards
+                            grid.querySelectorAll('.file-card').forEach(card => {
+                                card.classList.add('file-card-enter');
+                            });
+                        }, 150);
+                    } else {
+                        grid.innerHTML = this.state.files.map(file => this.renderFileCard(file)).join('');
+                    }
+                } else {
+                    grid.classList.add('hidden');
+                    list.classList.remove('hidden');
+                    list.innerHTML = `<div class="divide-y divide-gray-100">${this.state.files.map(file => this.renderFileRow(file)).join('')}</div>`;
+                }
+            },
+
+            renderFileCard(file) {
+                const icon = file.isDir ? 'folder' : 'file';
+                const iconColor = file.isDir ? 'text-apple-blue' : 'text-apple-textSecondary';
+                const info = file.isDir ? `${file.items} items` : file.size;
+
+                return `
+                    <div class="file-card bg-apple-bg rounded-apple-lg p-4 cursor-pointer group" onclick="FTPManager.openItem('${file.name}', ${file.isDir})">
+                        <div class="flex flex-col items-center text-center">
+                            <i class="ph-fill ph-${icon} text-5xl ${iconColor} mb-3"></i>
+                            <p class="font-medium text-apple-text text-sm truncate w-full">${file.name}</p>
+                            <p class="text-xs text-apple-textSecondary mt-1">${info}</p>
+                        </div>
+                        <div class="hidden group-hover:flex justify-center gap-1 mt-3">
+                            <button onclick="event.stopPropagation(); FTPManager.deleteItem('${file.name}')" class="p-1.5 bg-white rounded-lg shadow-sm hover:bg-red-50 transition-colors">
+                                <i class="ph ph-trash text-apple-error text-sm"></i>
+                            </button>
+                        </div>
+                    </div>
+                `;
+            },
+
+            renderFileRow(file) {
+                const icon = file.isDir ? 'folder' : 'file';
+                const iconColor = file.isDir ? 'text-apple-blue' : 'text-apple-textSecondary';
+                const info = file.isDir ? `${file.items} items` : file.size;
+
+                return `
+                    <div class="flex items-center justify-between p-4 hover:bg-apple-bg transition-colors cursor-pointer" onclick="FTPManager.openItem('${file.name}', ${file.isDir})">
+                        <div class="flex items-center gap-3">
+                            <i class="ph-fill ph-${icon} text-2xl ${iconColor}"></i>
+                            <span class="font-medium text-apple-text">${file.name}</span>
+                        </div>
+                        <div class="flex items-center gap-4">
+                            <span class="text-sm text-apple-textSecondary">${info}</span>
+                            <button onclick="event.stopPropagation(); FTPManager.deleteItem('${file.name}')" class="p-1.5 rounded-lg hover:bg-red-50 transition-colors">
+                                <i class="ph ph-trash text-apple-error"></i>
+                            </button>
+                        </div>
+                    </div>
+                `;
+            },
+
+            openItem(name, isDir) {
+                if (isDir) {
+                    // Smooth folder navigation with loading state
+                    const grid = document.getElementById('file-grid');
+                    grid.classList.add('transitioning');
+
+                    setTimeout(() => {
+                        this.state.currentPath = this.state.currentPath ? `${this.state.currentPath}/${name}` : name;
+                        this.renderBreadcrumb();
+                        // Simulate loading new folder contents
+                        this.renderFileManager(true);
+                        this.UI.showToast(`Opened folder: ${name}`, 'info');
+                    }, 150);
+                }
+            },
+
+            renderBreadcrumb() {
+                const container = document.getElementById('breadcrumb');
+                const parts = this.state.currentPath.split('/').filter(Boolean);
+
+                let html = '<button class="breadcrumb-item text-apple-blue hover:underline font-medium" onclick="FTPManager.navigateTo(\'\')">Root</button>';
+                let path = '';
+
+                parts.forEach((part, i) => {
+                    path += (path ? '/' : '') + part;
+                    html += `<i class="ph ph-caret-right text-apple-textSecondary text-sm"></i>`;
+                    html += `<button class="breadcrumb-item text-apple-blue hover:underline font-medium" onclick="FTPManager.navigateTo('${path}')">${part}</button>`;
+                });
+
+                container.innerHTML = html;
+            },
+
+            navigateTo(path) {
+                this.state.currentPath = path;
+                this.renderBreadcrumb();
+            },
+
+            showNewFolderModal() {
+                this.UI.showModal(
+                    'Create New Folder',
+                    '<input type="text" id="new-folder-name" placeholder="Folder name" class="input-apple w-full px-4 py-3 bg-apple-bg border border-black/10 rounded-apple text-apple-text placeholder-apple-textSecondary focus:outline-none focus:border-apple-blue">',
+                    `<button onclick="FTPManager.UI.hideModal()" class="px-4 py-2 text-sm font-medium text-apple-textSecondary hover:bg-apple-bg rounded-apple transition-colors">Cancel</button>
+                     <button onclick="FTPManager.createFolder()" class="px-4 py-2 bg-apple-blue hover:bg-apple-blueHover text-white text-sm font-medium rounded-apple transition-colors">Create</button>`
+                );
+            },
+
+            createFolder() {
+                const name = document.getElementById('new-folder-name')?.value;
+                if (name) {
+                    this.state.files.unshift({ name, isDir: true, items: 0 });
+                    this.renderFileManager();
+                    this.UI.hideModal();
+                    this.UI.showToast(`Folder "${name}" created`, 'success');
+                }
+            },
+
+            deleteItem(name) {
+                // Animate card removal
+                const cards = document.querySelectorAll('.file-card');
+                cards.forEach(card => {
+                    if (card.textContent.includes(name)) {
+                        card.style.transform = 'scale(0.8)';
+                        card.style.opacity = '0';
+                    }
+                });
+
+                setTimeout(() => {
+                    this.state.files = this.state.files.filter(f => f.name !== name);
+                    this.renderFileManager(false);
+                    this.UI.showToast(`"${name}" deleted`, 'success');
+                }, 200);
+            }
+        };
+
+        // Initialize on DOM ready
+        document.addEventListener('DOMContentLoaded', () => FTPManager.init());
+    </script>
+</body>
+
+</html>

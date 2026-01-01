@@ -1,131 +1,115 @@
-# FTP Manager & Uploader 
+# 🚀 FTP Manager & Uploader 💎
 
-<img width="600"  alt="Screenshot 1404-10-10 at 1 51 16 PM" src="https://github.com/user-attachments/assets/35b5670b-84eb-4f58-a25c-a13f0f14f4e3" />
+![Banner](./banner.png)
 
-- Contributors: Aref solaimani & Mahdi mortazavi
-- Tags: ftp, uploader, file manager, ftp manager, file browser, url uploader
-- Requires at least: 5.0
-- Tested up to: 6.9
-- Stable tag: 1.7.0
-- License: GPLv2 or later
+> **The Ultimate FTP Management Solution for WordPress.**  
+> Seamlessly transfer, browse, and manage your files directly from your dashboard.
 
-Complete FTP management solution with background uploads from URL and device, plus full file manager capabilities.
+---
 
-### Description
+### 🌟 Key Highlights
 
-FTP Manager & Uploader is a comprehensive WordPress plugin that provides a complete FTP management solution. Upload files from URLs or directly from your device, and manage your entire FTP server structure through an intuitive file manager interface—all from your WordPress admin panel.
+| ⚡ Lightning Fast | 🔒 Military Grade | 🔄 Background Magic |
+| :--- | :--- | :--- |
+| Quick URL & Device uploads. | AES-256-CBC Encryption. | WP-Cron powered async uploads. |
 
-**Key Features:**
-<img width="1364" height="744" alt="Screenshot 1404-10-10 at 1 53 52 PM" src="https://github.com/user-attachments/assets/052d9615-eab0-490d-9bc5-7deb01fa3994" />
+---
 
-*   **Dual Upload Methods:**
-    *   Upload from URL: Transfer files directly from any public URL to your FTP server
-    *   Upload from Device: Upload files directly from your computer to FTP
+### 📖 Introduction
 
-*   **Background Processing:** All uploads run asynchronously using WordPress Cron, preventing server timeouts even with large files. You can close the page immediately after starting an upload.
+**FTP Manager & Uploader** is a comprehensive WordPress plugin designed for developers and site administrators who need a powerful, reliable, and secure way to manage FTP assets without leaving the WordPress Admin Panel. 
 
-*   **Full-Featured File Manager:**
-    *   Browse files and folders on your FTP server
-    *   Create new directories
-    *   Delete files and folders (with recursive deletion support)
-    *   Move files and folders to different locations
-    *   Copy files and folders
-    *   Navigate with breadcrumb navigation
-    *   View file details (size, date)
+Whether you're migrating large files from a remote server via URL or uploading assets directly from your local machine, our tool handles the heavy lifting in the background, ensuring your workflow remains uninterrupted.
 
-*   **Enterprise-Grade Security:** Your FTP password is encrypted using AES-256-CBC encryption before storage in the database.
+---
 
-*   **Smart Retry System:** Automatic retry mechanism attempts to re-upload failed files up to 3 times with intelligent error handling.
+### ✨ Pro Features
 
-*   **Public Link Generation:** Configure a "Base URL" to automatically generate and copy public links for your uploaded files.
+*   **📂 Full-Featured File Manager**
+    *   Navigate your FTP server with an intuitive industrial-grade file browser.
+    *   Create, Delete, Move, and Copy files/folders with ease.
+    *   Breadcrumb navigation for lightning-fast directory switching.
+*   **🌐 Dual Upload Channels**
+    *   **Upload from URL:** Paste a link and let our background system do the rest.
+    *   **Upload from Device:** Direct, high-speed uploads from your computer.
+*   **🤖 Smart Background Processing**
+    *   Leverages **WordPress Cron** to prevent server timeouts.
+    *   Close the browser window; your upload will complete independently!
+*   **🛡️ Enterprise-Grade Security**
+    *   Passwords are never stored in plain text.
+    *   Encrypted using **AES-256-CBC** with automated key rotation.
+*   **🔁 Intelligent Retry System**
+    *   Failsafe uploads with up to 3 automatic retries on connection drops.
+*   **🔗 Public Link Generator**
+    *   Automatically generate and copy public URLs for your files with one click.
+*   **📊 Real-Time Dashboard**
+    *   Live AJAX updates—track your upload history and status in real-time.
 
-*   **Real-Time Status Updates:** Live AJAX-powered status updates show upload progress without page refresh.
+---
 
-*   **Connection Testing:** Built-in FTP connection tester to verify your credentials before uploading.
+### 🛠️ Installation
 
-*   **Upload History:** Track all upload attempts with detailed status information, retry counts, and error messages.
+1.  **Download & Upload:** Download the plugin ZIP and upload it via `Plugins > Add New`.
+2.  **Activate:** Power up the plugin from your WordPress dashboard.
+3.  **Configure:** Navigate to **FTP Uploader > Settings**.
+4.  **Connect:** Enter your FTP credentials. Our built-in **Connection Tester** will verify them instantly.
+5.  **Go!** Start managing your files like a pro.
 
-### Installation
+---
 
-1.  Download zip & Upload the zip to the `/wp-content/plugins/` directory.
-2.  Activate the plugin through the 'Plugins' menu in WordPress.
-3.  Navigate to **FTP Uploader > Settings** tab.
-4.  Enter your FTP Host, Username, Password, Base URL (optional), and Remote Path (optional).
-5.  Click **Save Settings**. The plugin will automatically test your FTP connection.
-6.  Once configured, you can start uploading files or managing your FTP server.
+### 🚀 Usage Guide
 
-### Usage
+#### 📥 URL Uploads
+1. Go to **Upload from URL**.
+2. Paste your target link.
+3. Select destination folder and click **Start Background Upload**.
 
-**Uploading from URL:**
+#### 💻 Device Uploads
+1. Go to **Upload from Device**.
+2. Pick your files.
+3. Watch the progress bar as your files fly to the server.
 
-1.  Go to **FTP Uploader > Upload from URL** tab.
-2.  Paste the direct URL of the file you want to transfer (e.g., `https://example.com/large-archive.zip`).
-3.  Optionally select a destination folder from the dropdown.
-4.  Click **Start Background Upload**.
-5.  The file will appear in the "Upload History" list with a "Pending" status.
-6.  The list auto-refreshes. Once status shows "Success", click **Copy Link** to get the public URL.
+#### 📁 File Management
+- Use the **File Manager** tab for full control over your remote structure.
+- Right-click or use the action buttons to manage your assets.
 
-**Uploading from Device:**
+---
 
-1.  Go to **FTP Uploader > Upload from your device** tab.
-2.  Click **Choose File** and select a file from your computer.
-3.  Optionally select a destination folder from the dropdown.
-4.  Click **Start Background Upload**.
-5.  Monitor the upload status in the history table below.
+### ❓ Frequently Asked Questions
 
-**File Manager:**
+> [!NOTE]
+> **Does it support SFTP?**  
+> We currently focus on standard FTP. SFTP support is on our roadmap for Q1!
 
-1.  Go to **FTP Uploader > File Manager** tab.
-2.  Browse your FTP server structure by clicking on folders.
-3.  Use the toolbar buttons to:
-    *   **Create Folder:** Create new directories
-    *   **Refresh:** Reload the current directory
-4.  For each file/folder, you can:
-    *   **Click the name:** Navigate into folders or view file details
-    *   **Move:** Move items to a different location
-    *   **Copy:** Copy items to a different location
-    *   **Delete:** Remove files or folders (folders are deleted recursively)
+> [!TIP]
+> **Can I close the page during upload?**  
+> ABSOLUTELY. Our background engine handles everything. You're free to grab a coffee ☕.
 
-### Frequently Asked Questions
+> [!IMPORTANT]
+> **How secure is my data?**  
+> We use industry-standard encryption. Your credentials are safe with us.
 
-= Does it support SFTP? =
-Currently, the plugin supports standard FTP. SFTP support is planned for future updates.
+---
 
-= What happens if the upload fails? =
-The plugin will automatically retry up to 3 times. If it still fails after all retries, the status will show "Failed" and you can hover over the status to see the detailed error message.
+### 📜 Changelog
 
-= Can I close the page after clicking upload? =
-Yes! Since the process runs in the background using WordPress Cron, you can close the page or navigate away immediately after clicking upload. The upload will continue processing.
+#### 💎 1.7.0
+*   ✨ **New:** Full File Manager integration.
+*   ✨ **New:** Direct Device Upload support.
+*   🚀 **Improved:** Recursive directory deletion.
+*   🎨 **UI:** Enhanced breadcrumb navigation.
 
-= What file sizes are supported? =
-There are no hard limits, but very large files may take longer to process. The plugin sets memory limit to 512MB and execution time to 5 minutes per upload attempt.
+#### 🔒 1.1.0
+*   🛠️ **Security:** Implemented AES-256-CBC encryption.
+*   🤖 **Logic:** Added automatic retry mechanism.
+*   ⚡ **Performance:** AJAX auto-refresh history table.
 
-= Can I manage existing files on my FTP server? =
-Yes! The File Manager tab allows you to browse, create, delete, move, and copy files and folders on your FTP server, just like a desktop FTP client.
+#### 🌱 1.0.0
+*   Initial launch with URL upload capabilities.
 
-= Is my FTP password secure? =
-Yes. Your FTP password is encrypted using AES-256-CBC encryption before being stored in the WordPress database. The encryption key is based on WordPress security salts.
+---
 
-= Can I upload to subdirectories? =
-Yes! Both upload methods support selecting a destination folder. The plugin will automatically create the directory structure if it doesn't exist.
-
-### Changelog
-
-= 1.7.0 =
-*   Added complete File Manager with browse, create, delete, move, and copy functionality
-*   Added upload from device feature
-*   Enhanced upload interface with folder selection
-*   Improved error handling and user feedback
-*   Added breadcrumb navigation in File Manager
-*   Added recursive directory operations support
-
-= 1.1.0 =
-*   Refactored code structure for better performance
-*   Added military-grade encryption for stored passwords
-*   Implemented automatic retry logic for failed uploads
-*   Added AJAX auto-refresh for the history table
-
-= 1.0.0 =
-*   Initial release with URL upload functionality
+*Developed by Aref Solaimani & Mahdi Mortazavi*  
+*Built for the community with ❤️*
 
 
